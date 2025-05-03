@@ -4,50 +4,8 @@ Section: metapackages
 Priority: optional
 Architecture: amd64
 Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
-Installed-Size: 45
-Depends: pulseaudio | pipewire-pulse, alsa-base, alsa-utils, anacron, baloo-kf5, bc,
- kde-cli-tools, breeze, breeze-icon-theme, ca-certificates, fonts-dejavu-core,
- fonts-freefont-ttf, foomatic-db-compressed-ppds, frameworkintegration,
- ghostscript-x, inputattach, khelpcenter, khotkeys, kinfocenter, kio, kio-extras,
- kmenuedit, kwin-x11, kwrited, libsasl2-modules, libu2f-udev, locales, locales-all,
- nvidia-driver, firmware-linux, openprinting-ppds, oxygen-sounds, plasma-desktop,
- plasma-workspace, powerdevil, printer-driver-pnm2ppa, rfkill, sddm-theme-breeze,
- software-properties-qt, spice-vdagent, systemsettings, unzip, wireless-tools,
- wpasupplicant, xdg-desktop-portal-gtk, xdg-user-dirs, xkb-data, xorg, zip, unrar,
- wget, git, flatpak, neofetch, kde-plasma-desktop
-Recommends: acpi-support, apt-xapian-index, aptitude, ark, avahi-autoipd,
- avahi-daemon, bluedevil, bluez, bluez-cups, breeze-gtk-theme, cdrdao, cryptsetup,
- cups, cups-bsd, cups-client, cups-filters, dbus-x11, desktop-file-utils, dolphin,
- drkonqi, elisa, fonts-indic, fonts-kacst-one, fonts-khmeros-core, fonts-lao,
- fonts-liberation, fonts-lklug-sinhala, fonts-noto-cjk, fonts-noto-color-emoji,
- fonts-sil-abyssinica, fonts-sil-padauk, fonts-thai-tlwg, fonts-tibetan-machine,
- fonts-ubuntu, fwupd, fwupd-signed, gnupg-agent, go-mtpfs, gpgsm, gstreamer-qapt,
- gstreamer1.0-pulseaudio, gwenview, hplip, im-config, kaccounts-integration, kate,
- kcalc, kde-config-gtk-style, kde-config-gtk-style-preview, kde-config-sddm,
- kde-config-tablet, kde-spectacle, kdeconnect, kdegraphics-thumbnailers,
- kdenetwork-filesharing, kdialog, kerneloops, kimageformat-plugins, kio-audiocd,
- kio-fuse, kmahjongg, kmines, konsole, konversation, kpat, krdc, kscreen,
- ksshaskpass, ksudoku, ksystemlog, ktorrent, kwalletmanager, kwin-addons,
- laptop-detect, libfuse2, libnss-mdns, libpam-kwallet5, libqca-qt5-2-plugins,
- libreoffice-calc, libreoffice-impress, libreoffice-kf5, libreoffice-plasma,
- libreoffice-style-breeze, libreoffice-writer, memtest86+, milou, mlocate,
- mobile-broadband-provider-info, muon, okular, okular-extra-backends, packagekit,
- partitionmanager, pastebinit, pavucontrol-qt, pcmciautils,
- phonon4qt5-backend-gstreamer, pinentry-qt, plasma-browser-integration,
- plasma-calendar-addons, plasma-dataengines-addons, plasma-discover, plasma-disks,
- plasma-firewall, plasma-nm, plasma-pa, plasma-runners-addons, plasma-systemmonitor,
- plasma-vault, plasma-wallpapers-addons, plasma-widgets-addons,
- policykit-desktop-privileges, polkit-kde-agent-1, print-manager,
- printer-driver-brlaser, printer-driver-c2esp, printer-driver-foo2zjs,
- printer-driver-m2300w, printer-driver-min12xxw, printer-driver-ptouch,
- printer-driver-pxljr, printer-driver-sag-gdi, printer-driver-splix,
- pulseaudio-module-bluetooth, qapt-deb-installer, qml-module-qtgraphicaleffects,
- qml-module-qtquick-xmllistmodel, qt5-image-formats-plugins, skanlite,
- thunderbird, udisks2, upower, gnome-multi-writer, vlc, xdg-desktop-portal-kde,
- xdg-utils, steam, elisa, obs-studio, kdenlive, gamemode, gamescope, lutris,
- scummvm, dosbox, xournalpp, gnome-disk-utility, synaptic, mangohud, goverlay,
- krfb, krdc, inkscape, gimp, stacer, timeshift, baobab, kio-gdrive, antimicro
+Depends: pulseaudio | pipewire-pulse, alsa-utils, anacron, baloo-kf5, bc, kde-cli-tools, breeze, breeze-icon-theme, ca-certificates, fonts-dejavu-core, fonts-freefont-ttf, foomatic-db-compressed-ppds, frameworkintegration, ghostscript-x, inputattach, khelpcenter, kinfocenter, kio, kio-extras, kmenuedit, kwin-x11, kwrited, libsasl2-modules, libu2f-udev, locales, locales-all, nvidia-driver, firmware-linux, openprinting-ppds, oxygen-sounds, plasma-desktop, plasma-workspace, powerdevil, printer-driver-pnm2ppa, sddm-theme-breeze, software-properties-qt, spice-vdagent, systemsettings, unzip, wireless-tools, wpasupplicant, xdg-desktop-portal-gtk, xdg-user-dirs, xkb-data, xorg, zip, unrar, wget, git, flatpak, kde-plasma-desktop
+Recommends: acpi-support, apt-xapian-index, aptitude, ark, avahi-autoipd, avahi-daemon, bluedevil, bluez, bluez-cups, breeze-gtk-theme, cdrdao, cryptsetup, cups, cups-bsd, cups-client, cups-filters, dbus-x11, desktop-file-utils, dolphin, drkonqi, elisa, fonts-indic, fonts-kacst-one, fonts-lao, fonts-liberation, fonts-noto-cjk, fonts-noto-color-emoji, fonts-thai-tlwg, fonts-tibetan-machine, fonts-ubuntu, fwupd, fwupd-signed, gnupg-agent, go-mtpfs, gpgsm, gstreamer-qapt, gstreamer1.0-pulseaudio, gwenview, hplip, im-config, kaccounts-integration, kate, kcalc, kde-config-gtk-style, kde-config-gtk-style-preview, kde-config-sddm, kde-config-tablet, kde-spectacle, kdeconnect, kdegraphics-thumbnailers, kdenetwork-filesharing, kdialog, kimageformat-plugins, kio-audiocd, kio-fuse, kmahjongg, kmines, konsole, konversation, kpat, krdc, kscreen, ksshaskpass, ksudoku, ksystemlog, ktorrent, kwalletmanager, kwin-addons, laptop-detect, libfuse2, libnss-mdns, libpam-kwallet5, libqca-qt5-2-plugins, libreoffice-calc, libreoffice-impress, libreoffice-plasma, libreoffice-style-breeze, libreoffice-writer, memtest86+, milou, mobile-broadband-provider-info, muon, okular, okular-extra-backends, packagekit, partitionmanager, pastebinit, pavucontrol-qt, pcmciautils, phonon4qt5-backend-gstreamer, pinentry-qt, plasma-browser-integration, plasma-calendar-addons, plasma-dataengines-addons, plasma-discover, plasma-disks, plasma-firewall, plasma-nm, plasma-pa, plasma-runners-addons, plasma-systemmonitor, plasma-vault, plasma-wallpapers-addons, plasma-widgets-addons, policykit-desktop-privileges, polkit-kde-agent-1, print-manager, printer-driver-brlaser, printer-driver-c2esp, printer-driver-foo2zjs, printer-driver-m2300w, printer-driver-min12xxw, printer-driver-ptouch, printer-driver-pxljr, printer-driver-sag-gdi, printer-driver-splix, pulseaudio-module-bluetooth, qapt-deb-installer, qml-module-qtgraphicaleffects, qml-module-qtquick-xmllistmodel, qt5-image-formats-plugins, skanlite, thunderbird, udisks2, upower, gnome-multi-writer, vlc, xdg-desktop-portal-kde, xdg-utils, obs-studio, kdenlive, gamemode, gamescope, lutris, scummvm, dosbox, xournalpp, gnome-disk-utility, synaptic, mangohud, goverlay, krfb, inkscape, gimp, timeshift, baobab, kio-gdrive, antimicro
 Conflicts: neon-all, neon-desktop, neon-settings-2, kubuntu-desktop
 Description: Kainat‑OS KDE Plasma Desktop Environment
- A meta-package to install a complete KDE Plasma desktop on Kainat OS,
- with all necessary drivers, fonts, and utilities.
+ A metapackage to install a complete KDE Plasma desktop on Kainat OS, with all necessary drivers, fonts, and utilities.
