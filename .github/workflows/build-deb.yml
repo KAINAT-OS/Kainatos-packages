@@ -37,6 +37,7 @@ jobs:
         run: |
           git config --global user.email "kainatquaderee@users.noreply.github.com"
           git config --global user.name "kainatquaderee"
+          git switch ppa
           git add .
           git commit --message 'auto-commited-by-action'
-          git push --set-upstream origin ppa
+          git push
