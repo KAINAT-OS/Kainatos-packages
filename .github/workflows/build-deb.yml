@@ -20,7 +20,7 @@ jobs:
       - name: Build .deb packages
         run: |
           mkdir -p debs
-          for dir in sources/*; do
+          for dir in ./sources/*; do
             dpkg-deb --build "$dir" "debs/$(basename "$dir").deb"
           done
 
