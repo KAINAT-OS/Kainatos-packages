@@ -30,7 +30,9 @@ jobs:
           cd debs
           dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
 
-
+      - name: remove sources
+        run: |
+          rm -r sources
       - name: commit and push
         run: |
           git config --global user.email "kainatquaderee@users.noreply.github.com"
