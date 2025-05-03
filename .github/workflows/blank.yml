@@ -1,0 +1,30 @@
+name: Build Debian Repository
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Debian packaging tools
+        run: sudo apt-get update && sudo apt-get install -y dpkg-dev
+
+      - name: Build .deb packages
+        run: |
+          mkdir -p debs
+          for dir in sources/*/; do
+            dpkg-deb --build "$dir" "debs/$(basename "$dir").deb"
+          done
+
+      - name: Generate APT index
+        run: |
+          cd debs
+          dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
