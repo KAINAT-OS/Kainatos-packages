@@ -2,10 +2,15 @@
 set -e
 
 case "$1" in
-  configure|triggered)
-    install -m 644 etc/apt/sources.list /etc/apt/sources.list
+  configure)
+    # dpkg has already unpacked /etc/apt/sources.list for us
     mkdir -p /etc/apt/apt.conf.d
     printf '%s\n' 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/80snapshot
+    apt-get update || true
+    ;;
+  triggered)
+    # restore master copy when /etc/apt/sources.list is changed
+    install -m 644 /usr/share/kainat-os-sources/sources.list.master /etc/apt/sources.list
     apt-get update || true
     ;;
 esac
