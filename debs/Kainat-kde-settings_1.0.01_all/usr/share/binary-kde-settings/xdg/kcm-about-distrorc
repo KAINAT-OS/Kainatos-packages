@@ -1,0 +1,5 @@
+[General]
+LogoPath=/usr/share/binary-kde-settings/distro-logo.svg
+Website=https://binaryos.github.io/
+Name=KOS
+Version=1.0.0 LTS

@@ -1,0 +1,50 @@
+#!/bin/sh -e
+
+# Automatically added by dh_installdeb/13.6ubuntu1
+dpkg-maintscript-helper rm_conffile /etc/X11/Xsession.d/80qtgraphicssystem 1:12.04ubuntu2 -- "$@"
+dpkg-maintscript-helper rm_conffile /etc/default/grub.d/50_kubuntu.cfg 1:14.04ubuntu15\~ -- "$@"
+dpkg-maintscript-helper rm_conffile /etc/skel/.config/kwinrc 1:18.04ubuntu11 -- "$@"
+# End automatically added section
+
+
+warn()
+{
+    echo "W: $1"
+}
+
+case "$1" in
+    purge)
+        # remove symbolic links on purge again (careful, only if these *are* symlinks, 
+        # also don't bail out if s.th. goes wrong (e.g. /media mounted r.o.)
+        if [ -h /.hidden ]; then
+            rm /.hidden || warn "Could not remove symlink /.hidden, skipping."
+        fi
+        if [ -h /media/.hidden ]; then
+            rm /media/.hidden || warn "Could not remove symlink /media/.hidden, skipping."
+        fi
+
+        # Update grub to drop possible name override
+        if [ -e /boot/grub/grub.cfg ] && which update-grub2 >/dev/null 2>&1; then
+            update-grub2 || warn "Failed to update-grub2"
+        fi
+        ;;
+
+    remove)
+        if update-alternatives --query newt-palette | grep -qs "Value: /etc/newt/palette.original"; then
+            update-alternatives --auto newt-palette || warn "Failed to update newt alternatives"
+        fi
+        ;;
+
+    upgrade|failed-upgrade|disappear)
+        ;;
+
+    abort-install|abort-upgrade)
+        ;;
+
+    *)
+        echo "$0 called with unknown argument \`$1'" 1>&2
+        exit 1
+        ;;
+esac
+
+exit 0

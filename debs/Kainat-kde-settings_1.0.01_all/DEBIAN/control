@@ -1,0 +1,13 @@
+Package: Kainat-kde-settings
+Source: Kainat-settings
+Version: 1.0.1
+Architecture: all
+Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
+Installed-Size: 613
+Depends: libnewt0.52, plasma-workspace, software-properties-qt, xterm
+Conflicts: neon-all, neon-desktop, neon-settings, neon-settings-2, ubuntustudio-default-settings, kubuntu-settings-desktop
+Breaks: kubuntu-default-settings, kubuntu-driver-manager
+Replaces: kubuntu-default-settings, kubuntu-driver-manager, fontconfig-config
+Section: kde
+Priority: optional
+Description: binary OS settings
