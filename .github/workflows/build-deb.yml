@@ -30,3 +30,10 @@ jobs:
         run: |
           cd debs
           dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
+
+
+      - name: 
+         run: git config --global user.email "kainatquaderee@gmail.com"
+         run: git config --global user.name "kainatquaderee"
+         run: git commit --message 'auto-commited-by-action'
+         run: git push
