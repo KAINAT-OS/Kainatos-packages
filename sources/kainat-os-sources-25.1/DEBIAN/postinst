@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+  configure|triggered)
+    install -m 644 etc/apt/sources.list /etc/apt/sources.list
+    mkdir -p /etc/apt/apt.conf.d
+    printf '%s\n' 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/80snapshot
+    apt-get update || true
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,7 @@
+# Kainat OS LTS 25.1 – frozen to snapshot from 2025‑02‑01
+deb     [check-valid-until=no] http://snapshot.debian.org/archive/debian/20250201T000000Z/ sid main contrib non-free non-free-firmware
+deb-src [check-valid-until=no] http://snapshot.debian.org/archive/debian/20250201T000000Z/ sid main contrib non-free non-free-firmware
+
+# Live security updates (NOT frozen)
+deb     http://deb.debian.org/debian-security sid-security main contrib non-free non-free-firmware
+deb-src http://deb.debian.org/debian-security sid-security main contrib non-free non-free-firmware
