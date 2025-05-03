@@ -1,0 +1,12 @@
+PRETTY_NAME="KainatOS 1"
+NAME="Kainat OS"
+VERSION_ID="24.04.1"
+VERSION="24.04.1 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE="ubuntu debian"
+HOME_URL="https://binaryos.github.io/"
+SUPPORT_URL="https://askubuntu.com/"
+BUG_REPORT_URL=""
+PRIVACY_POLICY_URL=""
+UBUNTU_CODENAME=noble

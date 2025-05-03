@@ -1,0 +1,13 @@
+Package: calamares-settings-kainatos
+Source: calamares-settings-kainatos
+Version: 1.0.0
+Architecture: all
+Maintainer: Kainat QUaderee <kainatquaderee@gmail.com>
+Installed-Size: 3004
+Depends:
+Conflicts: calamares-settings-lubuntu, calamares-settings-ubuntustudio
+Breaks: calamares-settings-lubuntu, calamares-settings-ubuntustudio
+Section: devel
+Priority: optional
+Homepage: https://binaryos.github.io//
+Description: binary installer

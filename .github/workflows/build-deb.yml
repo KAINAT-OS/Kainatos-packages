@@ -22,7 +22,7 @@ jobs:
         run: |
           mkdir -p ./debs
           for dir in ./sources/*; do
-            dpkg-deb --build "$dir" "./debs/$(basename "$dir").deb"
+            dpkg-deb --root-owner-group --build "$dir" "./debs/$(basename "$dir").deb"
           done
 
       - name: Generate APT index
