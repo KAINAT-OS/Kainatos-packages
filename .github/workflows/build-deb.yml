@@ -19,9 +19,9 @@ jobs:
 
       - name: Build .deb packages
         run: |
-          mkdir -p debs
+          mkdir -p ./debs
           for dir in ./sources/*; do
-            dpkg-deb --build "$dir" "debs/$(basename "$dir").deb"
+            dpkg-deb --build "$dir" "./debs/$(basename "$dir").deb"
           done
 
       - name: Generate APT index
