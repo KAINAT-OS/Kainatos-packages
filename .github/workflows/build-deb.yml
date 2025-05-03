@@ -33,7 +33,9 @@ jobs:
 
 
       - name: commit and push
-         run: git config --global user.email "kainatquaderee@gmail.com"
-         run: git config --global user.name "kainatquaderee"
-         run: git commit --message 'auto-commited-by-action'
-         run: git push
+        uses: actions/checkout@v3
+        run: |
+          git config --global user.email "kainatquaderee@gmail.com"
+          git config --global user.name "kainatquaderee"
+          git commit --message 'auto-commited-by-action'
+          git push
