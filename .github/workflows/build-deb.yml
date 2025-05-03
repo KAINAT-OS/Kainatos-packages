@@ -32,7 +32,7 @@ jobs:
 
       - name: remove sources
         run: |
-          rm -r sources
+          rm -r ./sources
       - name: commit and push
         run: |
           git config --global user.email "kainatquaderee@users.noreply.github.com"
