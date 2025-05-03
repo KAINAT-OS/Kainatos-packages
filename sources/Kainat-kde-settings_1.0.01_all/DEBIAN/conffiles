@@ -1,0 +1,12 @@
+/etc/X11/Xsession.d/70vlc-plugin-path
+/etc/X11/Xsession.d/70xdg-binary-dir
+/etc/X11/Xsession.d/80kubuntu-xmodmap
+/etc/fonts/conf.avail/56-kubuntu-noto.conf
+/etc/kde4rc
+/etc/kubuntu-default-settings/directory-home
+/etc/kubuntu-default-settings/directory-media
+/etc/kubuntu-default-settings/hidden-media
+/etc/skel/.config/korgacrc
+/etc/skel/.face
+/etc/xdg/kcm-about-distrorc
+/etc/xdg/kickoffrc
