@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+#
+# app-image-manager
+# Lists AppImages installed in /usr/bin and ~/bin, lets you uninstall them.
+
+set -euo pipefail
+
+# 1) Gather installed AppImages
+declare -a items
+for f in /usr/bin/*.AppImage; do
+  [[ -f $f ]] || continue
+  name="${f##*/}"
+  label="${name%.AppImage}"
+  items+=("$f" "$label" false)
+done
+for f in "$HOME/bin"/*.AppImage; do
+  [[ -f $f ]] || continue
+  name="${f##*/}"
+  label="${name%.AppImage}"
+  items+=("$f" "$label" false)
+done
+
+if [[ ${#items[@]} -eq 0 ]]; then
+  kdialog --error "No AppImages found in /usr/bin or ~/bin."
+  exit 0
+fi
+
+# 2) Show checklist
+selection=$(kdialog --title "AppImage Manager" \
+  --checklist "Select AppImages to uninstall:" \
+    Path Name Selected \
+    "${items[@]}")
+
+# Cancel / nothing selected?
+if [[ -z "$selection" ]]; then
+  exit 0
+fi
+
+# Parse selection into array
+eval "selected=( $selection )"
+
+# 3) If any system‑wide, ask for sudo once
+need_sudo=false
+for path in "${selected[@]}"; do
+  if [[ $path == /usr/bin/* ]]; then
+    need_sudo=true
+    break
+  fi
+done
+
+if $need_sudo; then
+  SUDOPW=$(kdialog --title "Authentication Required" \
+           --password "Enter your sudo password:")
+  [[ -n "$SUDOPW" ]] || { kdialog --error "No password entered; aborting."; exit 1; }
+  SUDO_CMD="sudo -S -p ''"
+fi
+
+# 4) Remove selections
+count=0
+for path in "${selected[@]}"; do
+  base="$(basename "$path")"
+  app="${base%.AppImage}"
+
+  # choose rm method
+  if [[ $path == /usr/bin/* ]]; then
+    echo "$SUDOPW" | $SUDO_CMD rm -f "$path"
+    desktop="/usr/share/applications/$app.desktop"
+    echo "$SUDOPW" | $SUDO_CMD rm -f "$desktop"
+  else
+    rm -f "$path"
+    desktop="$HOME/.local/share/applications/$app.desktop"
+    rm -f "$desktop"
+  fi
+  ((count++))
+done
+
+# 5) Notify
+kdialog --title "Uninstalled" \
+        --msgbox "Removed $count AppImage(s) and their launchers."

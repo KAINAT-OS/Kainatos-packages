@@ -1,0 +1,19 @@
+Package: kainatos-appimage-manager
+Version: 25.1
+Section: misc
+Priority: optional
+Architecture: all
+Maintainer: kainatq <kainatquaderee@gmail.com>
+Homepage: https://example.com/kainatos-appimage-manager
+Depends:
+Pre-Depends:
+Recommends:
+Suggests:
+Enhances:
+Breaks:
+Conflicts:
+Provides:
+Replaces:
+Installed-Size: 24
+Description: TODO: Short description of kainatos-appimage-manager
+ TODO: Long description of kainatos-appimage-manager, continuing here.
