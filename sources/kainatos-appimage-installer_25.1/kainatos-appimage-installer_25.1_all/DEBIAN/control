@@ -1,0 +1,19 @@
+Package: kainatos-appimage-installer
+Version: 25.1
+Section: misc
+Priority: optional
+Architecture: all
+Maintainer: kainatq <kainatquaderee@gmail.com>
+Homepage: https://example.com/kainatos-appimage-installer
+Depends:
+Pre-Depends:
+Recommends:
+Suggests:
+Enhances:
+Breaks:
+Conflicts:
+Provides:
+Replaces:
+Installed-Size: 24
+Description: TODO: Short description of kainatos-appimage-installer
+ TODO: Long description of kainatos-appimage-installer, continuing here.
