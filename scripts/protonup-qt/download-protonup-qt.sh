@@ -21,7 +21,7 @@ ASSET_URL=$(jq -r '.assets[] | select(.name | endswith(".AppImage")) | .browser_
 rm -f "$TMP_JSON"
 
 # Download the AppImage asset and save to current directory :contentReference[oaicite:5]{index=5}
-wget  "$ASSET_URL"
+wget  -O ProtonUp-Qt.AppImage "$ASSET_URL"
 
 # Make the AppImage executable
 
