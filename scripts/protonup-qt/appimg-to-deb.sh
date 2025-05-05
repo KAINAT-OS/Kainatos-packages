@@ -58,6 +58,7 @@ Description: Auto-converted AppImage ($PKG_NAME) to Debian package layout
 EOF
 
 # Create .desktop file
+mkdir -p "$PKGDIR/usr/share/applications/"
 cat > "$PKGDIR/usr/share/applications/${PKG_NAME}.desktop" <<EOF
 [Desktop Entry]
 Name=$PKG_NAME
