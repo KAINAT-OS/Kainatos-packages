@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Script: appimage2deb.sh
+# Description: Convert an AppImage into a Debian package layout for later .deb packaging.
+
+APPIMAGE="${1:-}"
+USER_DEPS="${2:-}"
+
+if [[ -z "$APPIMAGE" || ! -f "$APPIMAGE" ]]; then
+  echo "Usage: $0 <AppImage> [\"Depends list\"]"
+  exit 1
+fi
+
+# Derive names and version
+PKG_NAME="$(basename "$APPIMAGE" .AppImage)"
+# Try to extract version from AppImage metadata or fallback to timestamp
+VERSION="$(strings "$APPIMAGE" \
+  | grep -m1 -E '^[0-9]+\.[0-9]+(\.[0-9]+)?' \
+  || date +%Y%m%d%H%M%S)"
+ARCH="$(dpkg --print-architecture)"
+
+# Prepare workspace
+tmpdir=$(mktemp -d)
+trap 'rm -rf "$tmpdir"' EXIT
+cd "$tmpdir"
+
+# Extract AppImage (produces squashfs-root/)
+chmod +x "$OLDPWD/$APPIMAGE"
+"$OLDPWD/$APPIMAGE" --appimage-extract >/dev/null
+
+# Setup package directory structure
+OUTPUT_DIR="$OLDPWD/sources"
+PKGDIR="$OUTPUT_DIR/${PKG_NAME}_${VERSION}_${ARCH}"
+mkdir -p "$PKGDIR/DEBIAN" \
+         "$PKGDIR/opt/$PKG_NAME" \
+         "$PKGDIR/usr/bin"
+
+# Move payload under /opt
+mv squashfs-root/* "$PKGDIR/opt/$PKG_NAME/"
+
+# Create launch symlink
+ln -s "/opt/$PKG_NAME/AppRun" \
+      "$PKGDIR/usr/bin/$PKG_NAME"
+
+# Auto-detect shared-library dependencies if user did not supply
+if [[ -z "$USER_DEPS" ]]; then
+  echo "Auto-detecting dependencies via dpkg-shlibdeps..."
+  command -v dpkg-shlibdeps >/dev/null
+  fakeroot dpkg-shlibdeps -O \
+    --root="$PKGDIR" \
+    "$PKGDIR/opt/$PKG_NAME/AppRun" >/dev/null
+  USER_DEPS="$(grep -h '^shlibs:Depends=' "$PKGDIR/DEBIAN/substvars" \
+    | cut -d= -f2- \
+    | sed 's/; /, /g')"
+  echo "Detected: $USER_DEPS"
+fi
+
+# Write control file
+cat > "$PKGDIR/DEBIAN/control" <<EOF
+Package: $PKG_NAME
+Version: $VERSION
+Section: utils
+Priority: optional
+Architecture: $ARCH
+Depends: ${USER_DEPS:-}
+Maintainer: $(whoami) <$(whoami)@$(hostname)>
+Description: Auto-converted AppImage ($PKG_NAME) to Debian package layout
+EOF
+
+# Output notice
+echo "Prepared Debian package layout at: $PKGDIR"
+echo "You can now run: dpkg-deb --build \"$PKGDIR\""
