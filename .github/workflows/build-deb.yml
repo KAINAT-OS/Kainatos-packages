@@ -18,7 +18,7 @@ jobs:
       - name: protonup qt works
         run: |
             ./scripts/protonup-qt/download-protonup-qt.sh
-            ./scripts/protonup-qt/appimg-to-deb.sh *.AppImage
+            ./scripts/protonup-qt/appimg-to-deb.sh ./*.AppImage
 
       - name: Install Debian packaging tools
         run: sudo apt-get update && sudo apt-get install -y dpkg-dev
