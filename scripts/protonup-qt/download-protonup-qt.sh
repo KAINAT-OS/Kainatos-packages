@@ -24,6 +24,6 @@ rm -f "$TMP_JSON"
 wget  "$ASSET_URL"
 
 # Make the AppImage executable
-chmod +x ProtonUp-Qt.AppImage
+
 
 #echo "Downloaded and made executable: ProtonUp-Qt.AppImage"
