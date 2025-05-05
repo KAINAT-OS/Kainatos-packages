@@ -43,17 +43,7 @@ mv squashfs-root/* "$PKGDIR/opt/$PKG_NAME/"
 ln -s "/opt/$PKG_NAME/AppRun" \
       "$PKGDIR/usr/bin/$PKG_NAME"
 
-# Auto-detect shared-library dependencies if user did not supply
-if [[ -z "$USER_DEPS" ]]; then
-  echo "Auto-detecting dependencies via dpkg-shlibdeps..."
-  command -v dpkg-shlibdeps >/dev/null
-  fakeroot dpkg-shlibdeps -O \
-    "$PKGDIR/opt/$PKG_NAME/AppRun" >/dev/null
-  USER_DEPS="$(grep -h '^shlibs:Depends=' "$PKGDIR/DEBIAN/substvars" \
-    | cut -d= -f2- \
-    | sed 's/; /, /g')"
-  echo "Detected: $USER_DEPS"
-fi
+
 
 # Write control file
 cat > "$PKGDIR/DEBIAN/control" <<EOF
