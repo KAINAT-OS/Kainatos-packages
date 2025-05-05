@@ -48,7 +48,6 @@ if [[ -z "$USER_DEPS" ]]; then
   echo "Auto-detecting dependencies via dpkg-shlibdeps..."
   command -v dpkg-shlibdeps >/dev/null
   fakeroot dpkg-shlibdeps -O \
-    --root="$PKGDIR" \
     "$PKGDIR/opt/$PKG_NAME/AppRun" >/dev/null
   USER_DEPS="$(grep -h '^shlibs:Depends=' "$PKGDIR/DEBIAN/substvars" \
     | cut -d= -f2- \
