@@ -3,7 +3,7 @@ Priority: optional
 Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
 Version: 13.0.1
 Homepage: http://binaryos.github.io
-Package: binary-os-core
+Package: kainat-os-core
 Architecture: amd64
 Depends: kainat-kde-settings, kainat-desktop, kainat-base-files
 Description:An metapackage for kainat os that installes all requared files
