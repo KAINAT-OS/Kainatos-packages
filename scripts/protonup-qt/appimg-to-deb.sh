@@ -57,6 +57,17 @@ Maintainer: $(whoami) <$(whoami)@$(hostname)>
 Description: Auto-converted AppImage ($PKG_NAME) to Debian package layout
 EOF
 
+# Create .desktop file
+cat > "$PKGDIR/usr/share/applications/${PKG_NAME}.desktop" <<EOF
+[Desktop Entry]
+Name=$PKG_NAME
+Exec=/usr/bin/$PKG_NAME
+Icon=/opt/$PKG_NAME/net.davidotek.pupgui2.png
+Type=Application
+Categories=Utility;
+EOF
+
+
 # Output notice
 echo "Prepared Debian package layout at: $PKGDIR"
 echo "You can now run: dpkg-deb --build \"$PKGDIR\""
