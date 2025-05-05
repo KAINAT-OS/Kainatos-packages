@@ -16,7 +16,7 @@ fi
 PKG_NAME="$(basename "$APPIMAGE" .AppImage)"
 # Try to extract version from AppImage metadata or fallback to timestamp
 VERSION="$(strings "$APPIMAGE" \
-  | grep -m1 -E '^[0-9]+\.[0-9]+(\.[0-9]+)?')"
+  | grep -oP 'ProtonUp-Qt-\K[0-9]+\.[0-9]+\.[0-9]+')"
 ARCH="$(dpkg --print-architecture)"
 
 # Prepare workspace
