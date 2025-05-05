@@ -10,4 +10,4 @@ Breaks: kubuntu-default-settings, kubuntu-driver-manager
 Replaces: kubuntu-default-settings, kubuntu-driver-manager, fontconfig-config
 Section: kde
 Priority: optional
-Description: binary OS settings
+Description: kainat OS settings
