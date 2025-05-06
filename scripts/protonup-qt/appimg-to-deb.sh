@@ -46,7 +46,7 @@ mv squashfs-root/* "$PKGDIR/opt/$PKG_NAME/"
 ln -s $APPIMAGE \
       "$PKGDIR/usr/bin/$PKG_NAME.AppImage"
 
-
+chmod +x "$PKGDIR/usr/bin/$PKG_NAME.AppImage"
 
 # Write control file
 cat > "$PKGDIR/DEBIAN/control" <<EOF
@@ -65,7 +65,7 @@ mkdir -p "$PKGDIR/usr/share/applications/"
 cat > "$PKGDIR/usr/share/applications/${PKG_NAME}.desktop" <<EOF
 [Desktop Entry]
 Name=$PKG_NAME
-Exec=/usr/bin/$PKG_NAME
+Exec=/usr/bin/$PKG_NAME.AppImage
 Icon=/opt/$PKG_NAME/net.davidotek.pupgui2.png
 Type=Application
 Categories=Utility;
