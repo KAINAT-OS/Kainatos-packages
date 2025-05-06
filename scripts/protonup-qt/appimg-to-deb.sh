@@ -20,7 +20,7 @@ PKG_NAME="$(basename "$APPIMAGE" .AppImage)"
 VERSION="$( curl -s https://api.github.com/repos/DavidoTek/ProtonUp-Qt/tags | \
 jq -r 'first(.[].name | select(test("^v[0-9]")))'
 )"
-Version="$(echo $version | cut -c2- )"
+VERSION="$(echo $VERSION | cut -c2- )"
 ARCH="x86-64"
 
 # Prepare workspace
