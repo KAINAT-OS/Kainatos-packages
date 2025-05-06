@@ -50,7 +50,7 @@ ln -s "/opt/$PKG_NAME/AppRun" \
 
 # Write control file
 cat > "$PKGDIR/DEBIAN/control" <<EOF
-Package: ProtonUp-Qt
+Package: protonup-qt
 Version: $VERSION
 Section: utils
 Priority: optional
