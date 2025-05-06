@@ -3,6 +3,8 @@ set -euo pipefail
 
 # Script: appimage2deb.sh
 # Description: Convert an AppImage into a Debian package layout for later .deb packaging.
+#install depends
+apt install curl
 
 APPIMAGE="${1:-}"
 USER_DEPS="${2:-}"
