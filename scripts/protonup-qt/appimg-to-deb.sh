@@ -43,7 +43,7 @@ mkdir -p "$PKGDIR/DEBIAN" \
 mv squashfs-root/* "$PKGDIR/opt/$PKG_NAME/"
 
 # Create launch symlink
-mv  $APPIMAGE \
+mv  "$OLDPWD/$APPIMAGE" \
       "$PKGDIR/usr/bin/$PKG_NAME.AppImage"
 
 chmod +x "$PKGDIR/usr/bin/$PKG_NAME.AppImage"
