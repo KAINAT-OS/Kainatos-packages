@@ -13,11 +13,14 @@ if [[ -z "$APPIMAGE" || ! -f "$APPIMAGE" ]]; then
 fi
 
 # Derive names and version
+Appimg_Name="$(basename "$APPIMAGE")"
 PKG_NAME="$(basename "$APPIMAGE" .AppImage)"
 # Try to extract version from AppImage metadata or fallback to timestamp
-VERSION="$(strings "$APPIMAGE" \
-  | grep -m1 -E '^[0-9]+\.[0-9]+(\.[0-9]+)?')"
-ARCH="$(dpkg --print-architecture)"
+VERSION="$(strings curl -s https://api.github.com/repos/DavidoTek/ProtonUp-Qt/tags | \
+jq -r 'first(.[].name | select(test("^v[0-9]")))'
+)"
+Version="$(echo $version | cut -c2- )"
+ARCH="x86-64"
 
 # Prepare workspace
 tmpdir=$(mktemp -d)
@@ -46,7 +49,7 @@ ln -s "/opt/$PKG_NAME/AppRun" \
 
 # Write control file
 cat > "$PKGDIR/DEBIAN/control" <<EOF
-Package: $PKG_NAME
+Package: ProtonUp-Qt
 Version: $VERSION
 Section: utils
 Priority: optional
