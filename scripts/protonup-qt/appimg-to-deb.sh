@@ -4,7 +4,6 @@ set -euo pipefail
 # Script: appimage2deb.sh
 # Description: Convert an AppImage into a Debian package layout for later .deb packaging.
 #install depends
-sudo apt-get install curl
 
 APPIMAGE="${1:-}"
 USER_DEPS="${2:-}"
@@ -18,9 +17,9 @@ fi
 Appimg_Name="$(basename "$APPIMAGE")"
 PKG_NAME="$(basename "$APPIMAGE" .AppImage)"
 # Try to extract version from AppImage metadata or fallback to timestamp
-VERSION="$(strings curl -s https://api.github.com/repos/DavidoTek/ProtonUp-Qt/tags | \
+VERSION="$(string $(curl -s https://api.github.com/repos/DavidoTek/ProtonUp-Qt/tags | \
 jq -r 'first(.[].name | select(test("^v[0-9]")))'
-)"
+))"
 Version="$(echo $version | cut -c2- )"
 ARCH="x86-64"
 
