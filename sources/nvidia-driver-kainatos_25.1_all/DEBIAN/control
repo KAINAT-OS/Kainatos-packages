@@ -1,0 +1,18 @@
+Package: nvidia-driver-kainatos
+Version: 25.1
+Section: misc
+Priority: optional
+Architecture: all
+Maintainer: kainatq <kainatquaderee@gmail.com>
+Homepage: https://example.com/nvidia-driver-kainatos
+Depends: nvidia-driver-libs:i386, nvidia-cuda-dev, nvidia-cuda-toolkit, libnvoptix1, nvidia-driver, firmware-misc-nonfree
+Pre-Depends:
+Recommends:
+Suggests:
+Enhances:
+Breaks:
+Conflicts:
+Provides:
+Replaces:
+Installed-Size: 8
+Description: Nvidia driver and cuda setup meta package for Kainat Os and debian
