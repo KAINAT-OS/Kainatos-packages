@@ -40,7 +40,7 @@ mkdir -p "$PKGDIR/DEBIAN" \
          "$PKGDIR/usr/bin"
 
 # Move payload under /opt
-mv squashfs-root/* "$PKGDIR/opt/$PKG_NAME/"
+mv squashfs-root/*.png "$PKGDIR/opt/$PKG_NAME/"
 
 # Create launch symlink
 mv  "$OLDPWD/$APPIMAGE" \
