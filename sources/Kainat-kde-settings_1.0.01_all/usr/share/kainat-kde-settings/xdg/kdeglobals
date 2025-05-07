@@ -133,8 +133,8 @@ ChangeCursor=true
 ColorScheme=KLight
 DefaultLightLookAndFeel=com.K-light.gg
 DefaultDarkLookAndFeel=com.K-dark.gg
-LookAndFeelPackage=com.K-dark.gg
-widgetStyle=breeze
+LookAndFeelPackage=com.K-light.gg
+widgetStyle=K-dark
 
 [KFileDialog Settings]
 Allow Expansion=true

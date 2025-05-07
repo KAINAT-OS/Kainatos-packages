@@ -1,5 +1,5 @@
 [kdeglobals][KDE]
-widgetStyle=Oxygen
+widgetStyle=breeze
 
 [kdeglobals][General]
 ColorScheme=KLight
@@ -8,7 +8,7 @@ ColorScheme=KLight
 Theme=breeze
 
 [plasmarc][Theme]
-name=binary
+name=K-dark
 
 [Wallpaper]
 Image=Binary-exeon
@@ -17,13 +17,13 @@ Image=Binary-exeon
 cursorTheme=breeze_cursors
 
 [kwinrc][WindowSwitcher]
-LayoutName=com.binary.gg
+LayoutName=com.K-light.gg
 
 [kwinrc][DesktopSwitcher]
-LayoutName=com.binary.gg
+LayoutName=com.K-light.gg
 
 [kwinrc][org.kde.kdecoration2]
 library=org.kde.breeze
 
 [KSplash]
-Theme=none
+Theme=None
