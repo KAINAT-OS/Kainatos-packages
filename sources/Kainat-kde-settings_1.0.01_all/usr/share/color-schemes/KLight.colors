@@ -126,13 +126,13 @@ ForegroundInactive=112,125,138
 ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=12,12,19
+ForegroundNormal=95,95,150
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [General]
 ColorScheme=BreezeLight
-Name=KLight
+Name=KLight2
 shadeSortColumn=true
 
 [KDE]
