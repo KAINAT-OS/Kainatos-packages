@@ -6,4 +6,5 @@ Homepage: http://binaryos.github.io
 Package: kainat-os-core
 Architecture: amd64
 Depends: kainat-kde-settings, kainat-desktop, kainat-base-files, kainat-splash
+Conflicts: plymouth
 Description:An metapackage for kainat os that installes all requared files
