@@ -2,14 +2,14 @@
 Comment=K[Kainat] theme for kde plasma
 Encoding=UTF-8
 Keywords=Desktop;Workspace;Appearance;Look and Feel;Logout;Lock;Suspend;Shutdown;Hibernate;
-Name=Binary
+Name=KLight
 Type=Service
 X-KDE-ParentApp=
 X-KDE-PluginInfo-Author=Kainat_Quaderee
 X-KDE-PluginInfo-Category=
 X-KDE-PluginInfo-Email=kainatquaderee@gmail.com
 X-KDE-PluginInfo-License=GPL3.0
-X-KDE-PluginInfo-Name=com.binary.gg
+X-KDE-PluginInfo-Name=com.K-light.gg
 X-KDE-PluginInfo-Version=0.1
 X-KDE-PluginInfo-Website=
 X-KDE-ServiceTypes=Plasma/LookAndFeel
