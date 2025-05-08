@@ -1,5 +1,5 @@
 Package: nvidia-driver-kainatos
-Version: 25.1.1
+Version: 25.1.2
 Section: misc
 Priority: optional
 Architecture: all
