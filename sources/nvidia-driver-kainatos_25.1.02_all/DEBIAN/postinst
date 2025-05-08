@@ -1,14 +1,14 @@
-#!/bin/sh
-set -e
-
-case "$1" in
-    configure)
-        echo "Updating initramfs for all installed kernels..."
-        update-initramfs -u -k all || {
-            echo "Error: Failed to update initramfs" >&2
-            exit 1
-        }
-        ;;
-esac
-
-exit 0
+# #!/bin/sh
+# set -e
+#
+# case "$1" in
+#     configure)
+#         echo "Updating initramfs for all installed kernels..."
+#         update-initramfs -u -k all || {
+#             echo "Error: Failed to update initramfs" >&2
+#             exit 1
+#         }
+#         ;;
+# esac
+#
+# exit 0
