@@ -7,7 +7,7 @@ Installed-Size: 613
 Depends: libnewt0.52, plasma-workspace, software-properties-qt, xterm
 Conflicts: neon-all, neon-desktop, neon-settings, neon-settings-2, ubuntustudio-default-settings, kubuntu-settings-desktop
 Breaks: kubuntu-default-settings, kubuntu-driver-manager
-Replaces: kubuntu-default-settings, kubuntu-driver-manager, fontconfig-config, dasktop-base
+Replaces: kubuntu-default-settings, kubuntu-driver-manager, fontconfig-config, desktop-base
 Section: kde
 Priority: optional
 Description: kainat OS settings
