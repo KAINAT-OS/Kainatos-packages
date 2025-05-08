@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-# File: debian/postinst
-# Purpose: Post-install script for nvidia-driver-kainatos
-# This will update all initramfs images so the new NVIDIA modules are included.
-
 case "$1" in
-  configure)
-      update-initramfs -u -k all
-    ;;
+    configure)
+        echo "Updating initramfs for all installed kernels..."
+        update-initramfs -u -k all || {
+            echo "Error: Failed to update initramfs" >&2
+            exit 1
+        }
+        ;;
 esac
 
 exit 0
