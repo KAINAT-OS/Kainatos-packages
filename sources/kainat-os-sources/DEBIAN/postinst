@@ -6,6 +6,7 @@ case "$1" in
     # dpkg has already unpacked /etc/apt/sources.list for us
     mkdir -p /etc/apt/apt.conf.d
     printf '%s\n' 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/80snapshot
+    644 /usr/share/kainat-os-sources/sources.list.master /etc/apt/sources.list
     apt-get update || true
     ;;
   triggered)

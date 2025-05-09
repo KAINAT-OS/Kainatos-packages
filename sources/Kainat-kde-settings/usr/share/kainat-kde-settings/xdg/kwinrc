@@ -4,7 +4,7 @@ Enabled=true
 Backend=OpenGL
 OpenGLIsUnsafe=false
 # Cap FPS to match typical gaming monitors
-#MaxFPS=144
+MaxFPS=144
 # Disable desktop animations
 AnimationSpeed=0.0
 # Allow tearing (benefits high-FPS gaming with vsync off)
