@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+# prerm — run before package is removed
+# arguments: $1 = action (remove|upgrade|abort-upgrade|failed-upgrade|deconfigure)
+case "$1" in
+  remove|purge)
+    # Remove the NVIDIA check script if it still exists
+    if [ -f /etc/profile.d/check-nvidia.sh ]; then
+      rm -f /etc/profile.d/check-nvidia.sh
+    fi
+    ;;
+esac
+
+# If you’re using debhelper, leave this here:
+# (it will insert any needed calls, e.g. to dh_installdeb)
+#DEBHELPER#
+
+exit 0

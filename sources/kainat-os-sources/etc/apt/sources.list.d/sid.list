@@ -1,2 +1,0 @@
-# Pull only those packages not present in  Testing snapshot
-deb [check-valid-until=no] http://snapshot.debian.org/archive/debian/20241101T000000Z/ sid main contrib non-free non-free-firmware

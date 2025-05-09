@@ -1,11 +1,25 @@
 #!/bin/sh
 set -e
 
-# Only run on install or upgrade
+# Source debhelper functions (if using debhelper >= 9)
+if [ -f /usr/share/dpkg/helpers.d/maintscript-functions ]; then
+  . /usr/share/dpkg/helpers.d/maintscript-functions
+fi
+
 case "$1" in
   configure)
-    echo "Updating initramfs for all installed kernels..."
-    update-initramfs -u -k all
+    if [ -x /usr/sbin/update-initramfs ]; then
+      echo "nvidia-driver-kainatos: updating initramfs for all installed kernels..."
+      update-initramfs -u -k all
+    else
+      echo "nvidia-driver-kainatos: warning: update-initramfs not found, skipping initramfs update" >&2
+    fi
+    ;;
+  abort-upgrade|abort-remove|abort-deconfigure|remove|purge)
+    # No action needed on these transitions
+    ;;
+  *)
+    # other maintscript calls: do nothing
     ;;
 esac
 
