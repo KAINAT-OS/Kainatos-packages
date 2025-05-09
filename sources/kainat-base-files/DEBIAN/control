@@ -7,7 +7,7 @@ Installed-Size: 613
 Depends:
 Conflicts:
 Breaks:
-Replaces:base-files,bash
+Replaces:base-files,bash,zsh-common,zsh
 Section: binary
 Priority: optional
 Description: kainat OS updater
