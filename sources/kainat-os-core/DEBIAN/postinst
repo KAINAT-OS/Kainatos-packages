@@ -9,7 +9,7 @@ if command -v update-grub >/dev/null 2>&1; then
     update-grub
 elif command -v grub-mkconfig >/dev/null 2>&1; then
     echo "Running grub-mkconfig…"
-    grub-mkconfig -o /boot/grub/grub.cfg
+    grub-mkconfig -o /boot/grub/grub.cfg || echo "Warning: grub-mkconfig failed."
 else
     echo "Warning: neither update-grub nor grub-mkconfig found; skipping GRUB update."
 fi

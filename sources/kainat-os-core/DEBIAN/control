@@ -1,7 +1,7 @@
 Source: kainat-os-core
 Priority: optional
 Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
-Version: 25.01.02
+Version: 25.01.03
 Homepage: http://binaryos.github.io
 Package: kainat-os-core
 Architecture: amd64
