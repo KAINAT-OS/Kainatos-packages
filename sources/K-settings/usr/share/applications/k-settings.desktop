@@ -3,6 +3,6 @@ Version=1.0
 Type=Application
 Name=K-settings
 Exec=/bin/K-settings.x86_64
-Icon=/usr/share/binary-settings/icon.svg
+Icon=/usr/share/binary-settings/icon.png
 Categories=Settings;
 Terminal=false
