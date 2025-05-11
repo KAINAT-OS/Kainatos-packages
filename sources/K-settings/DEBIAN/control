@@ -1,7 +1,7 @@
 Package: K-settings
-Version: 1.0
+Version: 25.01
 Section: base
 Priority: optional
 Architecture: all
 Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
-Description: K-settings is a simple settings app for Binary OS and KOS.
+Description: K-settings is a simple settings app for Binary OS and Kainat OS.
