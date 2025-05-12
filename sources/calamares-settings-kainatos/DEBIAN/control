@@ -1,13 +1,20 @@
 Package: calamares-settings-kainatos
-Source: calamares-settings-kainatos
-Version: 25.1.1
+Version: 25.1
 Architecture: all
-Maintainer: Kainat QUaderee <kainatquaderee@gmail.com>
-Installed-Size: 3004
+Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
+Installed-Size: 317
 Depends: calamares, cryptsetup, libglib2.0-bin, keyutils, pkexec, qml-module-qtquick-window2, qml-module-qtquick2, dconf-gsettings-backend | gsettings-backend
 Conflicts: calamares-settings-lubuntu, calamares-settings-ubuntustudio,calamares-settings-debian
 Breaks: calamares-settings-lubuntu, calamares-settings-ubuntustudio, calamares-settings-debian
-Section: devel
+Provides: calamares-settings
+Section: utils
 Priority: optional
-Homepage: https://binaryos.github.io//
-Description: binary installer
+Homepage:
+Description: Kainat OS theme and settings for the Calamares Installer
+ Calamares is a generic installer framework for Linux distributions.
+ By default, it contains a set of boilerplate wording and images. This
+ package provides the latest Kainat OS artwork as well as scripts that
+ supports EFI installations.
+ .
+ It also serves as an example for how derivatives can create their own
+ calamares-settings packages.
