@@ -9,7 +9,6 @@ Breaks: calamares-settings-lubuntu, calamares-settings-ubuntustudio, calamares-s
 Provides: calamares-settings
 Section: utils
 Priority: optional
-Homepage:
 Description: Kainat OS theme and settings for the Calamares Installer
  Calamares is a generic installer framework for Linux distributions.
  By default, it contains a set of boilerplate wording and images. This
