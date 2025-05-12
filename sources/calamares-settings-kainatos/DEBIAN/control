@@ -1,12 +1,12 @@
 Package: calamares-settings-kainatos
 Source: calamares-settings-kainatos
-Version: 1.0.0
+Version: 25.1.1
 Architecture: all
 Maintainer: Kainat QUaderee <kainatquaderee@gmail.com>
 Installed-Size: 3004
-Depends:
-Conflicts: calamares-settings-lubuntu, calamares-settings-ubuntustudio
-Breaks: calamares-settings-lubuntu, calamares-settings-ubuntustudio
+Depends: calamares, cryptsetup, libglib2.0-bin, keyutils, pkexec, qml-module-qtquick-window2, qml-module-qtquick2, dconf-gsettings-backend | gsettings-backend
+Conflicts: calamares-settings-lubuntu, calamares-settings-ubuntustudio,calamares-settings-debian
+Breaks: calamares-settings-lubuntu, calamares-settings-ubuntustudio, calamares-settings-debian
 Section: devel
 Priority: optional
 Homepage: https://binaryos.github.io//
