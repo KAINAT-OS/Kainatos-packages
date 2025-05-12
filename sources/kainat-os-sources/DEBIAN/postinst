@@ -3,16 +3,23 @@ set -e
 
 case "$1" in
   configure)
-    # dpkg has already unpacked /etc/apt/sources.list for us
+    dpkg-divert --package kainat-os-sources \
+                 --divert /etc/apt/sources.list.distrib \
+                 --rename /etc/apt/sources.list
+    install -m 644 /usr/share/kainat-os-sources/sources.list.master \
+                   /etc/apt/sources.list
     mkdir -p /etc/apt/apt.conf.d
-    printf '%s\n' 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/80snapshot
-    install -m 644 /usr/share/kainat-os-sources/sources.list.master /etc/apt/sources.list
+    printf '%s\n' 'Acquire::Check-Valid-Until "false";' \
+      > /etc/apt/apt.conf.d/80snapshot
     apt-get update || true
     ;;
   triggered)
-    # restore master copy when /etc/apt/sources.list is changed
-    install -m 644 /usr/share/kainat-os-sources/sources.list.master /etc/apt/sources.list
+    install -m 644 /usr/share/kainat-os-sources/sources.list.master \
+                   /etc/apt/sources.list
     apt-get update || true
+    ;;
+  *)
+    # dpkg policy: do nothing on abort-* actions
     ;;
 esac
 
