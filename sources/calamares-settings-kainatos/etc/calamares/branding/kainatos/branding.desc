@@ -30,7 +30,7 @@ images:
     # productBanner:     baner.png
     # productWallpaper:  ""
 
-slideshow:               slideshowQML
+slideshow:               show.qml
 
 style:
    SidebarBackground:    "#1e1f31"
