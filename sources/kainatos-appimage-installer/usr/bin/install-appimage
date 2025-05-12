@@ -24,21 +24,12 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-# 2) If system‑wide, prompt for sudo password via kdialog
-if [[ "$SCOPE" == "system" ]]; then
-    SUDOPW=$(kdialog --title "Authentication Required" \
-             --password "Enter your sudo password:")
-    if [[ -z "$SUDOPW" ]]; then
-        kdialog --error "No password entered; aborting."
-        exit 1
-    fi
-    SUDO_CMD="sudo -S -p ''"
-fi
+
 
 # 3) Copy AppImage & chmod
 if [[ "$SCOPE" == "system" ]]; then
-    echo "$SUDOPW" | $SUDO_CMD cp "$APPIMAGE" "/usr/bin/$BASENAME"
-    echo "$SUDOPW" | $SUDO_CMD chmod +x "/usr/bin/$BASENAME"
+    cp "$APPIMAGE" "/usr/bin/$BASENAME"
+    chmod +x "/usr/bin/$BASENAME"
     DEST_PATH="/usr/bin/$BASENAME"
     DESKTOP_DIR="/usr/share/applications"
 else
@@ -51,7 +42,7 @@ fi
 
 # 4) Create applications directory if needed
 if [[ "$SCOPE" == "system" ]]; then
-    echo "$SUDOPW" | $SUDO_CMD mkdir -p "$DESKTOP_DIR"
+    mkdir -p "$DESKTOP_DIR"
 else
     mkdir -p "$DESKTOP_DIR"
 fi
@@ -60,7 +51,7 @@ fi
 DESKTOP_PATH="$DESKTOP_DIR/$APP_NAME.desktop"
 
 if [[ "$SCOPE" == "system" ]]; then
-    echo "$SUDOPW" | $SUDO_CMD bash -c "cat > '$DESKTOP_PATH' <<EOF
+    bash -c "cat > '$DESKTOP_PATH' <<EOF
 [Desktop Entry]
 Type=Application
 Name=$APP_NAME
@@ -69,7 +60,7 @@ Icon=$APP_NAME
 Terminal=false
 Categories=Utility;
 EOF"
-    echo "$SUDOPW" | $SUDO_CMD chmod 644 "$DESKTOP_PATH"
+    chmod 644 "$DESKTOP_PATH"
 else
     cat > "$DESKTOP_PATH" <<EOF
 [Desktop Entry]
@@ -81,10 +72,3 @@ Terminal=false
 Categories=Utility;
 EOF
 fi
-
-# 6) Clear sensitive data
-unset SUDOPW
-
-# 7) Notify user
-kdialog --title "Installation Complete" \
-        --msgbox "'$APP_NAME' has been installed successfully."

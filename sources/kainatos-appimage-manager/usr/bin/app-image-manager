@@ -39,22 +39,6 @@ fi
 # Parse selection into array
 eval "selected=( $selection )"
 
-# 3) If any system‑wide, ask for sudo once
-need_sudo=false
-for path in "${selected[@]}"; do
-  if [[ $path == /usr/bin/* ]]; then
-    need_sudo=true
-    break
-  fi
-done
-
-if $need_sudo; then
-  SUDOPW=$(kdialog --title "Authentication Required" \
-           --password "Enter your sudo password:")
-  [[ -n "$SUDOPW" ]] || { kdialog --error "No password entered; aborting."; exit 1; }
-  SUDO_CMD="sudo -S -p ''"
-fi
-
 # 4) Remove selections
 count=0
 for path in "${selected[@]}"; do
@@ -63,9 +47,9 @@ for path in "${selected[@]}"; do
 
   # choose rm method
   if [[ $path == /usr/bin/* ]]; then
-    echo "$SUDOPW" | $SUDO_CMD rm -f "$path"
+    rm -f "$path"
     desktop="/usr/share/applications/$app.desktop"
-    echo "$SUDOPW" | $SUDO_CMD rm -f "$desktop"
+    rm -f "$desktop"
   else
     rm -f "$path"
     desktop="$HOME/.local/share/applications/$app.desktop"
