@@ -14,7 +14,15 @@ kickoff.writeConfig("global", "Alt+F1")
 kickoff.currentConfigGroup = ["Look/Feel"]
 kickoff.writeConfig("alignment", "center")
 dockPanel.addWidget("org.kde.plasma.marginsseparator")
-dockPanel.addWidget("org.kde.plasma.icontasks")
+var tasks = dockPanel.addWidget("org.kde.plasma.icontasks")
+tasks.currentConfigGroup = ["Configuration", "Launchers"];
+ tasks.writeConfig("launchers", [
+        "applications:k-settings.desktop",      // alternate desktop file
+        "applications:thorium-browser.desktop",  // Thorium Browser
+        "applications:org.kde.kate.desktop",
+        "applications:org.kde.dolphin.desktop",
+        "applications:org.kde.discover.desktop"
+    ]);
 dockPanel.addWidget("org.kde.plasma.panelspacer")
 
 
