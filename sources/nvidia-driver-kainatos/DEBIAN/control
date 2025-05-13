@@ -7,6 +7,6 @@ Priority: optional
 Architecture: all
 Maintainer: kainatq <kainatquaderee@gmail.com>
 Homepage: https://example.com/nvidia-driver-kainatos
-Depends: nvidia-driver-libs:i386, nvidia-cuda-dev, nvidia-cuda-toolkit, libnvoptix1, nvidia-driver, firmware-misc-nonfree
+Depends: nvidia-driver-libs:i386, nvidia-cuda-dev, nvidia-cuda-toolkit, libnvoptix1, nvidia-driver, firmware-misc-nonfree, libnvidia-ngx1
 Installed-Size: 8
 Description: Nvidia driver and cuda setup meta package for Kainat Os and debian
