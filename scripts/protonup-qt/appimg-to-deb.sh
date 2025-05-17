@@ -54,7 +54,7 @@ Package: protonup-qt
 Version: $VERSION
 Section: utils
 Priority: optional
-Architecture: $ARCH
+Architecture: all
 Depends: ${USER_DEPS:-}
 Maintainer: $(whoami) <$(whoami)@$(hostname)>
 Description: Auto-converted AppImage ($PKG_NAME) to Debian package layout
