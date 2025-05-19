@@ -27,6 +27,7 @@ Name=${drive_label} (${free_space} free)
 Icon=drive-harddisk
 URL=file://$mount_point
 Terminal=false
+MimeType=application/x-desktop;application/x-drive-desktop;
 ENTRY
     chmod +x "$desktop_file"
 done < <(df -h --output=target,size,used,avail,pcent,fstype | tail -n +2)
