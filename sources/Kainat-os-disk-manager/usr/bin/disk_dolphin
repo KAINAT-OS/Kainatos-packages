@@ -1,5 +1,6 @@
 #!/bin/bash
-while true; do
+
+while pgrep -x dolphin > /dev/null; do
     /usr/bin/create_disk_links.sh
     sleep 5
 done
