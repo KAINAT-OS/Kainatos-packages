@@ -33,3 +33,19 @@ ENTRY
 done < <(df -h --output=target,size,used,avail,pcent,fstype | tail -n +2)
 
 echo "Desktop entries for mounted drives created in $DESKTOP_DIR."
+
+# Create a .desktop entry for the $HOME directory
+home_label="Home"
+home_avail=$(df -h "$HOME" --output=avail | tail -n 1 | xargs)
+home_desktop_file="$DESKTOP_DIR/${home_label}_(${home_avail}_free).desktop"
+
+cat << ENTRY > "$home_desktop_file"
+[Desktop Entry]
+Type=Link
+Name=${home_label} (${home_avail} free)
+Icon=user-home
+URL=file://$HOME
+Terminal=false
+ENTRY
+
+chmod +x "$home_desktop_file"
