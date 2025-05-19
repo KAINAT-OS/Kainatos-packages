@@ -74,7 +74,7 @@ case "$CHOICE" in
 esac
 
 # Ask for label
-LABEL=$(kdialog --inputbox "Enter new label for $DEVICE:" "")
+LABEL=$(kdialog --geometry=500 --inputbox "Enter new label for $DEVICE:" "")
 if [[ -z "$LABEL" ]]; then
     echo "No label provided. Using default." >&2
 else
@@ -103,5 +103,5 @@ kdialog --sorry "About to run: ${MKCMD[*]} $DEVICE"
 
 echo $PASSWORD | sudo -S umount "$DEVICE"
 echo $PASSWORD | sudo -S  "${MKCMD[@]}" "$DEVICE"
-
+udisksctl  mount -b "$DEVICE"
 kdialog --msgbox "Successfully formatted $DEVICE as $CHOICE with label '${LABEL:-<none>}'"
