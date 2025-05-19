@@ -45,6 +45,7 @@ Name=${home_label} (${home_avail} free)
 Icon=user-home
 URL=file://$HOME
 Terminal=false
+MimeType=application/x-desktop;application/x-drive-desktop;
 ENTRY
 
 chmod +x "$home_desktop_file"
