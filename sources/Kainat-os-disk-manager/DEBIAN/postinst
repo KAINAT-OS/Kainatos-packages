@@ -29,5 +29,8 @@ getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 { print $1 ":" $6 }' | while I
 
     echo "Installed computer.desktop to $home/Desktop for user $user."
 done
-chmod 777 /computer
+if [  -d "/computer" ]; then
+    chmod 777 /computer
+fi
+
 exit 0
