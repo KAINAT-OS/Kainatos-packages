@@ -1,0 +1,8 @@
+[Unit]
+Description=Watch for mount table changes to update disk links
+
+[Path]
+PathChanged=/proc/self/mountinfo
+
+[Install]
+WantedBy=multi-user.target

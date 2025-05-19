@@ -1,10 +1,10 @@
 [Unit]
 Description=Create symbolic links to mounted drives
-After=home.mount
+After=local-fs.target
 
 [Service]
+Type=oneshot
 ExecStart=/usr/bin/create_disk_links.sh
-User=%I
 
 [Install]
 WantedBy=multi-user.target
