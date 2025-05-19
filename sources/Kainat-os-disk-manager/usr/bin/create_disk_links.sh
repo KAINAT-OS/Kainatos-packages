@@ -1,20 +1,26 @@
 #!/bin/bash
+# Directory to store .desktop entries
+DESKTOP_DIR="$HOME/.disks"
+mkdir -p "$DESKTOP_DIR"
+# Clean old entries
+rm -f "$DESKTOP_DIR"/*.desktop
 
-# Directory to store disk links
-DISK_DIR="$HOME/.disks"
-
-# Create the directory if it doesn't exist
-mkdir -p "$DISK_DIR"
-
-# Remove any existing links to avoid duplication
-rm -f "$DISK_DIR"/*
-
-# Loop through all mounted drives
-for mount_point in $(lsblk -lnpo MOUNTPOINT | grep -v '^$'); do
-    # Extract the drive name from the mount point
+# Loop through mounted drives and create .desktop files with free space
+while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
+    [ -z "$mount_point" ] && continue
     drive_name=$(basename "$mount_point")
-    # Create a symbolic link in the .disks directory
-    ln -sf "$mount_point" "$DISK_DIR/$drive_name"
-done
+    desktop_file="$DESKTOP_DIR/${drive_name}.desktop"
+    # Format free space (fs_avail)
+    free_space="$fs_avail"
+    cat << ENTRY > "$desktop_file"
+[Desktop Entry]
+Type=Application
+Name=${drive_name} (${free_space} free)
+Icon=drive-harddisk
+Exec=xdg-open file://$mount_point
+Terminal=false
+ENTRY
+    chmod +x "$desktop_file"
+done < <(df -h --output=target,size,used,avail,pcent,fstype | tail -n +2)
 
-echo "Links to mounted drives have been created in $DISK_DIR."
+echo "Desktop entries for mounted drives created in $DESKTOP_DIR."

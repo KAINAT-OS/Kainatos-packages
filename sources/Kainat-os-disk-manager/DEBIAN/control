@@ -1,7 +1,8 @@
 Package: kainatos-disk-manager
-Version: 25.1.07
+Version: 25.1.08
 Section: utils
 Priority: optional
 Architecture: all
 Maintainer: Kainat Quaderee <kainat@example.com>
+Replaces: dolphin
 Description: Automatically creates symbolic links for mounted drives in the ~/.disks directory.

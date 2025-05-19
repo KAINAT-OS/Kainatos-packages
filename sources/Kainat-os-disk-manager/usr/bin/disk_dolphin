@@ -1,0 +1,5 @@
+#!/bin/bash
+while true; do
+    /usr/bin/create_disk_links.sh
+    sleep 5
+done

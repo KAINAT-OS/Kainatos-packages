@@ -1,5 +1,17 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-# Enable the service after installation
-systemctl enable disk-links.service
+PKGNAME="kainatos-disk-manager"  # replace with your actual package name
+
+case "$1" in
+  configure)
+    # Divert the original desktop file so upgrades of dolphin won’t overwrite yours
+    dpkg-divert --package "$PKGNAME" \
+                --local --rename \
+                --add /usr/share/applications/org.kde.dolphin.desktop
+    # (Optionally) install your own version afterwards
+     install -m 644 usr/share/applications/org.kde.dolphin.desktop /usr/share/applications/org.kde.dolphin.desktop
+    ;;
+esac
+
+exit 0
