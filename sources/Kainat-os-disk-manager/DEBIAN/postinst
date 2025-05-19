@@ -32,5 +32,6 @@ done
 if [  -d "/computer" ]; then
     chmod 777 /computer
 fi
+update-mime-database /usr/share/mime
 
 exit 0

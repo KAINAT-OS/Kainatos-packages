@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/x-drive-desktop;
+Actions=formatDrive;
+X-KDE-AuthorizeAction=org.kde.kdepartitionmanager.format
+
+[Desktop Action formatDrive]
+Name=Format Drive
+Icon=drive-removable-media
+Exec=/usr/bin/formatDrive %f
