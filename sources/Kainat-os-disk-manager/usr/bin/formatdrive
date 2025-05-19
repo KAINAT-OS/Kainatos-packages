@@ -2,6 +2,8 @@
 # disk-formatter.sh
 # Usage: disk-formatter.sh <path-to-desktop-file>
 
+PASSWORD=$(kdialog --password "please enter your password")
+
 set -euo pipefail
 
 # Check for required argument
@@ -98,6 +100,8 @@ fi
 
 # Execute format
 kdialog --sorry "About to run: ${MKCMD[*]} $DEVICE"
-sudo "${MKCMD[@]}" "$DEVICE"
+
+echo $PASSWORD | sudo -S umount "$DEVICE"
+echo $PASSWORD | sudo -S  "${MKCMD[@]}" "$DEVICE"
 
 kdialog --msgbox "Successfully formatted $DEVICE as $CHOICE with label '${LABEL:-<none>}'"
