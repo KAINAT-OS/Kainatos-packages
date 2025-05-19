@@ -1,7 +1,6 @@
 #!/bin/bash
 # Directory to store .desktop entries
-DESKTOP_DIR="$HOME/.disks"
-mkdir -p "$DESKTOP_DIR"
+DESKTOP_DIR="/computer"
 # Clean old entries
 rm -f "$DESKTOP_DIR"/*.desktop
 
@@ -18,7 +17,7 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     drive_label=$(lsblk -no LABEL "$device")
     # Use the device name if no label is found
     drive_label="${drive_label:-$(basename "$mount_point")}"
-    desktop_file="$DESKTOP_DIR/${drive_label}_(${fs_avail}_free).desktop"
+    desktop_file="$DESKTOP_DIR/${drive_label}_(${fs_avail}_free)-drive.desktop"
     # Format free space (fs_avail)
     free_space="$fs_avail"
     cat << ENTRY > "$desktop_file"
@@ -37,7 +36,7 @@ echo "Desktop entries for mounted drives created in $DESKTOP_DIR."
 # Create a .desktop entry for the $HOME directory
 home_label="Home"
 home_avail=$(df -h "$HOME" --output=avail | tail -n 1 | xargs)
-home_desktop_file="$DESKTOP_DIR/${home_label}_(${home_avail}_free).desktop"
+home_desktop_file="$DESKTOP_DIR/${home_label}_(${home_avail}_free)-drive.desktop"
 
 cat << ENTRY > "$home_desktop_file"
 [Desktop Entry]
