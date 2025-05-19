@@ -1,0 +1,10 @@
+[Unit]
+Description=Create symbolic links to mounted drives
+After=home.mount
+
+[Service]
+ExecStart=/home/$USER/create_disk_links.sh
+User=$USER
+
+[Install]
+WantedBy=multi-user.target

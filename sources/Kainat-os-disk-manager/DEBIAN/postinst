@@ -1,0 +1,5 @@
+#!/bin/bash
+set -e
+
+# Enable the service after installation
+systemctl enable disk-links.service
