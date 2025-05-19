@@ -1,0 +1,13 @@
+{
+  "KDE-KIO-Protocols": {
+    "mydisks": {
+      "Class": ":local",
+      "exec": "kf5/kio/mydisks",
+      "input": "none",
+      "output": "filesystem",
+      "protocol": "mydisks",
+      "reading": true,
+      "listing": true
+    }
+  }
+}

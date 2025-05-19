@@ -1,0 +1,33 @@
+#!/bin/sh
+set -e
+
+# Path to the desktop file
+SOURCE_FILE="/etc/skel/Desktop/computer.desktop"
+
+# Ensure the source file exists
+if [ ! -f "$SOURCE_FILE" ]; then
+    echo "Source file $SOURCE_FILE does not exist."
+    exit 1
+fi
+
+# Iterate over each user with UID >= 1000 (standard for regular users)
+getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 { print $1 ":" $6 }' | while IFS=: read -r user home; do
+    # Skip if home directory doesn't exist
+    if [ ! -d "$home" ]; then
+        echo "Home directory $home for user $user does not exist. Skipping."
+        continue
+    fi
+
+    # Create Desktop directory if it doesn't exist
+    mkdir -p "$home/Desktop"
+
+    # Copy the desktop file
+    cp "$SOURCE_FILE" "$home/Desktop/"
+
+    # Set ownership
+    chown "$user":"$user" "$home/Desktop/computer.desktop"
+
+    echo "Installed computer.desktop to $home/Desktop for user $user."
+done
+
+exit 0

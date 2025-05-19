@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=computer
+Exec=bash -c "/usr/bin/disk_dolphin & dolphin ~/.disks/"
+Icon=computer
+Type=Application
+X-DocPath=dolphin/index.html
+Categories=Qt;KDE;System;FileTools;FileManager;
+GenericName=File Manager
+X-DBUS-ServiceName=org.kde.dolphin
+StartupWMClass=dolphin

@@ -8,16 +8,25 @@ rm -f "$DESKTOP_DIR"/*.desktop
 # Loop through mounted drives and create .desktop files with free space
 while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     [ -z "$mount_point" ] && continue
-    drive_name=$(basename "$mount_point")
-    desktop_file="$DESKTOP_DIR/${drive_name}.desktop"
+    # Exclude system partitions like /boot, /proc, /sys, etc.
+    if [[ "$mount_point" =~ ^/(boot|proc|sys|dev|run|tmp|var/lib/docker|snap) ]]; then
+        continue
+    fi
+    # Retrieve the device associated with the mount point
+    device=$(findmnt -n -o SOURCE "$mount_point")
+    # Retrieve the label of the device
+    drive_label=$(lsblk -no LABEL "$device")
+    # Use the device name if no label is found
+    drive_label="${drive_label:-$(basename "$mount_point")}"
+    desktop_file="$DESKTOP_DIR/${drive_label}_(${fs_avail}_free).desktop"
     # Format free space (fs_avail)
     free_space="$fs_avail"
     cat << ENTRY > "$desktop_file"
 [Desktop Entry]
-Type=Application
-Name=${drive_name} (${free_space} free)
+Type=Link
+Name=${drive_label} (${free_space} free)
 Icon=drive-harddisk
-Exec=xdg-open file://$mount_point
+URL=file://$mount_point
 Terminal=false
 ENTRY
     chmod +x "$desktop_file"
