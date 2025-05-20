@@ -1,50 +1,57 @@
 #!/bin/bash
 # Directory to store .desktop entries
-DESKTOP_DIR="/computer"
-# Clean old entries
-rm -f "$DESKTOP_DIR"/*.desktop
+desktop_dir="/computer"
 
-# Loop through mounted drives and create .desktop files with free space
+# Clean old entries
+rm -f "${desktop_dir}"/*.desktop
+
+# Loop through mounted drives and create .desktop files with free/total space
 while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
-    [ -z "$mount_point" ] && continue
-    # Exclude system partitions like /boot, /proc, /sys, etc.
-    if [[ "$mount_point" =~ ^/(boot|proc|sys|dev|run|tmp|var/lib/docker|snap) ]]; then
+    [ -z "${mount_point}" ] && continue
+
+    # Exclude system partitions
+    if [[ "${mount_point}" =~ ^/(boot|proc|sys|dev|run|tmp|var/lib/docker|snap) ]]; then
         continue
     fi
-    # Retrieve the device associated with the mount point
-    device=$(findmnt -n -o SOURCE "$mount_point")
-    # Retrieve the label of the device
-    drive_label=$(lsblk -no LABEL "$device")
-    # Use the device name if no label is found
-    drive_label="${drive_label:-$(basename "$mount_point")}"
-    desktop_file="$DESKTOP_DIR/${drive_label}_(${fs_avail}_free)-drive.desktop"
-    # Format free space (fs_avail)
-    free_space="$fs_avail"
-    cat << ENTRY > "$desktop_file"
+
+    # Device and label
+    device=$(findmnt -n -o SOURCE "${mount_point}")
+    drive_label=$(lsblk -no LABEL "${device}")
+    drive_label="${drive_label:-$(basename "${mount_point}")}"  # fallback
+
+    # Format spaces
+    free_space="${fs_avail}"
+    total_space="${fs_size}"
+
+    # Desktop file
+    desktop_file="${desktop_dir}/${drive_label}_[${free_space}/${total_space}].desktop"
+    cat << ENTRY > "${desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${drive_label} (${free_space} free)
+Name=${drive_label} [${free_space}/${total_space}]
 Icon=drive-harddisk
-URL=file://$mount_point
+URL=file://${mount_point}
 Terminal=false
 ENTRY
-    chmod +x "$desktop_file"
+    chmod +x "${desktop_file}"
 done < <(df -h --output=target,size,used,avail,pcent,fstype | tail -n +2)
 
-echo "Desktop entries for mounted drives created in $DESKTOP_DIR."
+echo "Desktop entries for mounted drives created in ${desktop_dir}."
 
-# Create a .desktop entry for the $HOME directory
+# .desktop for $HOME with free/total
 home_label="Home"
-home_avail=$(df -h "$HOME" --output=avail | tail -n 1 | xargs)
-home_desktop_file="$DESKTOP_DIR/${home_label}_(${home_avail}_free)-drive.desktop"
+home_info=$(df -h "$HOME" --output=size,avail | tail -n 1)
+home_total=$(awk '{print $1}' <<< "${home_info}")
+home_avail=$(awk '{print $2}' <<< "${home_info}")
 
-cat << ENTRY > "$home_desktop_file"
+home_desktop_file="${desktop_dir}/${home_label}_[${home_avail}/${home_total}].desktop"
+cat << ENTRY > "${home_desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${home_label} (${home_avail} free)
+Name=${home_label} [${home_avail}/${home_total}]
 Icon=user-home
-URL=file://$HOME
+URL=file://${HOME}
 Terminal=false
 ENTRY
 
-chmod +x "$home_desktop_file"
+chmod +x "${home_desktop_file}"
