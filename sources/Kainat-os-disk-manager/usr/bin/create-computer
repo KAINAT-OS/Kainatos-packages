@@ -1,8 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-FILE="$HOME/.local/share/user-places.xbel"
-LOCK="$HOME/.config/computer-create.lock"
+# Determine the original user's username
+if [[ -n "${SUDO_USER-}" && "$SUDO_USER" != "root" ]]; then
+  USERNAME="$SUDO_USER"
+else
+  echo "Cannot determine the non-root user. Please run this script using sudo."
+  exit 1
+fi
+
+# Retrieve the original user's home directory
+USER_HOME=$(getent passwd "$USERNAME" | cut -d: -f6)
+
+# Define paths based on the original user's home directory
+FILE="$USER_HOME/.local/share/user-places.xbel"
+LOCK="$USER_HOME/.config/computer-create.lock"
 TMP="$(mktemp)"
 
 # Exit if lock file exists
