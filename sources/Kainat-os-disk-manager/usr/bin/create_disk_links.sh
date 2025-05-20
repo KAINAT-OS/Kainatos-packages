@@ -1,6 +1,7 @@
 #!/bin/bash
 # Directory to store .desktop entries
 desktop_dir="/computer"
+ICON="drive-harddisk"
 
 # Clean old entries
 rm -f "${desktop_dir}"/*
@@ -44,25 +45,28 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     #Warning
     #Warning
     if [ "$used_percent_number" -ge 90 ]; then
-        warning="[ [⚠️] LOW SPACE ]"
+        ICON="dialog-warning"
+        warning="[! LOW SPACE ]"
     else
         warning=""
+        ICON="drive-harddisk"
     fi
     if [ "$used_percent_number" -ge 100 ]; then
-        warning="[ [⛔] DISK IS FULL]"
+        warning="[ ! DISK IS FULL]"
+        ICON="dialog-error"
 
     fi
 
     # Build filename including ASCII bar
-    filename="${drive_label}    [ ${free_space} free | ${total_space}] ${bar}    ${warning}"
+    filename="${drive_label}    [ ${free_space} free | ${total_space}] ⎥${bar}⎢   ${warning}"
 
     # Desktop file
     desktop_file="${desktop_dir}/${filename}"
     cat << ENTRY > "${desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${drive_label} [${free_space}|${total_space}] ${bar} ${fs_useperc}
-Icon=drive-harddisk
+Name=${drive_label} [${free_space}|${total_space}] [${bar}] ${fs_useperc}
+Icon=$ICON
 URL=file://${mount_point}
 Terminal=false
 ENTRY
@@ -98,23 +102,26 @@ done
 
     #Warning
     if [ "$used_percent_number" -ge 90 ]; then
-        warning="[ [⚠️] LOW SPACE ]"
+        ICON="dialog-warning"
+        warning="[! LOW SPACE ]"
     else
         warning=""
+        ICON="user-home"
     fi
     if [ "$used_percent_number" -ge 100 ]; then
-        warning="[ [⛔] DISK IS FULL]"
+        warning="[ ! DISK IS FULL]"
+        ICON="dialog-error"
 
     fi
 # Build home filename including ASCII bar
-home_filename="${home_label}    [ ${home_avail} free | ${home_total} ]  ${bar}  ${warning}"
+home_filename="${home_label}    [ ${home_avail} free | ${home_total} ]  ⎥${bar}⎢ ${warning}"
 
 home_desktop_file="${desktop_dir}/${home_filename}"
 cat << ENTRY > "${home_desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${home_label} [${home_avail}|${home_total}] ${bar} ${home_useperc}
-Icon=user-home
+Name=${home_label} [${home_avail}|${home_total}] [${bar}] ${home_useperc}
+Icon=$ICON
 URL=file://${HOME}
 Terminal=false
 ENTRY
