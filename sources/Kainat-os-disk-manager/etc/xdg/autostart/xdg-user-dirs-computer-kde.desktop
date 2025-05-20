@@ -1,7 +1,7 @@
 [Desktop Entry]
 Comment[en_US]=
 Comment=
-Exec=create-computer
+Exec=/usr/bin/create-computer
 GenericName[en_US]=
 GenericName=
 MimeType=
@@ -16,4 +16,4 @@ TryExec=create-computer
 Type=Application
 X-KDE-SubstituteUID=false
 X-KDE-Username=
-X-KDE-autostart-phase=2
+X-KDE-autostart-phase=1
