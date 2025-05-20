@@ -58,7 +58,7 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     fi
 
     # Build filename including ASCII bar
-    filename="${drive_label}    [ ${free_space} free | ${total_space}] ⎥${bar}⎢   ${warning}"
+    filename="${drive_label}    [ ${free_space} free | ${total_space} ] ⎥${bar}⎢   ${warning}"
 
     # Desktop file
     desktop_file="${desktop_dir}/${filename}"
