@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FILE="$HOME/.local/share/user-places.xbel"
+LOCK="$HOME/.config/computer-create.lock"
+TMP="$(mktemp)"
+
+# Exit if lock file exists
+if [[ -f "$LOCK" ]]; then
+  echo "Lock file found at $LOCK — nothing to do."
+  exit 0
+fi
+
+# Define the block to insert
+read -r -d '' INSERT_BLOCK <<'EOF'
+ <bookmark href="file:///computer">
+  <title>computer</title>
+  <info>
+   <metadata owner="http://freedesktop.org">
+    <bookmark:icon name="computer-symbolic"/>
+   </metadata>
+   <metadata owner="http://www.kde.org">
+    <ID>1747713775/0</ID>
+   </metadata>
+  </info>
+ </bookmark>
+EOF
+
+# Process the file: after the Home bookmark's closing tag, print the INSERT_BLOCK
+awk -v insert="$INSERT_BLOCK" '
+  /<bookmark href="file:\/\/\/home\/kainatq">/ { in_home=1 }
+  {
+    print
+    if (in_home && /<\/bookmark>/) {
+      print insert
+      in_home=0
+    }
+  }
+' "$FILE" > "$TMP"
+
+# Backup original and overwrite
+cp "$FILE" "$FILE".bak
+mv "$TMP" "$FILE"
+
+# Create the lock file
+mkdir -p "$(dirname "$LOCK")"
+touch "$LOCK"
+
+echo "Inserted <bookmark href=\"file:///computer\"> after Home bookmark in $FILE"
+echo "Lock created at $LOCK"
