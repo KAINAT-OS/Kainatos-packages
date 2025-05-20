@@ -29,7 +29,7 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     used_bar_count=$((used_percent_number * bar_length / 100))
     free_bar_count=$((bar_length - used_bar_count))
     bar="$(printf '%*s' "${used_bar_count}" '' | tr ' ' '#')"
-    bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '-')"
+    bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '.')"
 
     #Warning
     #Warning
@@ -44,7 +44,7 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     fi
 
     # Build filename including ASCII bar
-    filename="${drive_label}_[${free_space}|${total_space}]____[${bar}] ${warning}"
+    filename="${drive_label}    [ ${free_space} free | ${total_space}]  [${bar}]    ${warning}"
 
     # Desktop file
     desktop_file="${desktop_dir}/${filename}"
@@ -74,7 +74,7 @@ bar_length=10
 used_bar_count=$((used_percent_number * bar_length / 100))
 free_bar_count=$((bar_length - used_bar_count))
 bar="$(printf '%*s' "${used_bar_count}" '' | tr ' ' '#')"
-bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '-')"
+bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '.')"
 
     #Warning
     if [ "$used_percent_number" -ge 90 ]; then
@@ -87,7 +87,7 @@ bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '-')"
 
     fi
 # Build home filename including ASCII bar
-home_filename="${home_label}_[${home_avail}|${home_total}]____[${bar}]  ${warning}"
+home_filename="${home_label}    [ ${home_avail} free | ${home_total} ]  [ ${bar} ]  ${warning}"
 
 home_desktop_file="${desktop_dir}/${home_filename}"
 cat << ENTRY > "${home_desktop_file}"
