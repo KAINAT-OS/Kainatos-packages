@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Service
+X-KDE-ServiceTypes=KonqPopupMenu/Plugin
+MimeType=application/x-desktop;
+Actions=UnmountDrive;
+
+[Desktop Action formatDrive]
+Name=Unmount Drive
+Icon=media-eject-symbolic
+Exec=/usr/bin/unmountdrive %f
