@@ -127,3 +127,55 @@ Terminal=false
 ENTRY
 
 chmod +x "${home_desktop_file}"
+
+
+# 3) Unmounted block devices
+# -----------------------------
+# Find all block partitions without a mountpoint
+declare -a unmounted_devices=($(lsblk -pnlo NAME,TYPE,MOUNTPOINT | awk '$2=="part" && $3=="" {print $1}'))
+for device in "${unmounted_devices[@]}"; do
+    # Determine label or fallback to device name
+    dev_label=$(lsblk -no LABEL "$device")
+    dev_label="${dev_label:-$(basename "$device")}"
+    echo $dev_label
+
+    # Get total size
+    total_size=$(lsblk -dnlo SIZE "$device")
+    # Since unmounted, used and avail are unknown; assume 0% used
+    free_space="N/A"
+    used_percent_number=0
+    fs_useperc="0%"
+
+    # Build usage bar (all free)
+    bar_length=10
+    used_bar_count=0
+    free_bar_count=$bar_length
+    used_char="█"
+    free_char="░"
+    bar=""
+    for ((i = 0; i < used_bar_count; i++)); do
+        bar+="$used_char"
+    done
+    for ((i = 0; i < free_bar_count; i++)); do
+        bar+="$free_char"
+    done
+
+    # Warning/icon logic (no space used -> no warning)
+    ICON="disk-quota-critical"
+    warning="⚠️ unmounted click to mount"
+
+    # Build filename including size and bar
+    umount_filename="${dev_label} [ Unknown free | unknowin ]${warning}"
+    umount_desktop_file="${desktop_dir}/${umount_filename}"
+cat << ENTRY > "${umount_desktop_file}"
+[Desktop Entry]
+Type=Application
+Name=${dev_label} [${free_space}|${total_size}] [${bar}] ${fs_useperc}
+Icon=$ICON
+Exec=udisksctl mount -b ${device} && ${0}
+Terminal=false
+ENTRY
+    chmod +x "${umount_desktop_file}"
+done
+
+echo "Desktop entries for mounted and unmounted drives created in ${desktop_dir}."
