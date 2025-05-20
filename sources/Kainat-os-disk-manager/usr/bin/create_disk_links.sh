@@ -28,8 +28,18 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     bar_length=10
     used_bar_count=$((used_percent_number * bar_length / 100))
     free_bar_count=$((bar_length - used_bar_count))
-    bar="$(printf '%*s' "${used_bar_count}" '' | tr ' ' '#')"
-    bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '.')"
+    used_char="█"
+    free_char="░"
+    bar=""
+
+    for ((i = 0; i < used_bar_count; i++)); do
+        bar+="${used_char}"
+    done
+
+    for ((i = 0; i < free_bar_count; i++)); do
+        bar+="${free_char}"
+    done
+
 
     #Warning
     #Warning
@@ -44,14 +54,14 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     fi
 
     # Build filename including ASCII bar
-    filename="${drive_label}    [ ${free_space} free | ${total_space}]  [${bar}]    ${warning}"
+    filename="${drive_label}    [ ${free_space} free | ${total_space}] ${bar}    ${warning}"
 
     # Desktop file
     desktop_file="${desktop_dir}/${filename}"
     cat << ENTRY > "${desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${drive_label} [${free_space}|${total_space}] [${bar}] ${fs_useperc}
+Name=${drive_label} [${free_space}|${total_space}] ${bar} ${fs_useperc}
 Icon=drive-harddisk
 URL=file://${mount_point}
 Terminal=false
@@ -73,8 +83,18 @@ used_percent_number=${home_useperc%%%}
 bar_length=10
 used_bar_count=$((used_percent_number * bar_length / 100))
 free_bar_count=$((bar_length - used_bar_count))
-bar="$(printf '%*s' "${used_bar_count}" '' | tr ' ' '#')"
-bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '.')"
+used_char="█"
+free_char="░"
+bar=""
+
+for ((i = 0; i < used_bar_count; i++)); do
+    bar+="${used_char}"
+done
+
+for ((i = 0; i < free_bar_count; i++)); do
+    bar+="${free_char}"
+done
+
 
     #Warning
     if [ "$used_percent_number" -ge 90 ]; then
@@ -87,13 +107,13 @@ bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '.')"
 
     fi
 # Build home filename including ASCII bar
-home_filename="${home_label}    [ ${home_avail} free | ${home_total} ]  [ ${bar} ]  ${warning}"
+home_filename="${home_label}    [ ${home_avail} free | ${home_total} ]  ${bar}  ${warning}"
 
 home_desktop_file="${desktop_dir}/${home_filename}"
 cat << ENTRY > "${home_desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${home_label} [${home_avail}|${home_total}] [${bar}] ${home_useperc}
+Name=${home_label} [${home_avail}|${home_total}] ${bar} ${home_useperc}
 Icon=user-home
 URL=file://${HOME}
 Terminal=false
