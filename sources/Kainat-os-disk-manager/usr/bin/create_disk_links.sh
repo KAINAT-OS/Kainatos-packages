@@ -5,7 +5,7 @@ desktop_dir="/computer"
 # Clean old entries
 rm -f "${desktop_dir}"/*.desktop
 
-# Loop through mounted drives and create .desktop files with free/total space
+# Loop through mounted drives and create .desktop files with free|total space, visual bar in name and filename
 while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     [ -z "${mount_point}" ] && continue
 
@@ -23,12 +23,23 @@ while read -r mount_point fs_size fs_used fs_avail fs_useperc fs_type; do
     free_space="${fs_avail}"
     total_space="${fs_size}"
 
+    # Usage bar
+    used_percent_number=${fs_useperc%%%}  # Remove % sign
+    bar_length=10
+    used_bar_count=$((used_percent_number * bar_length / 100))
+    free_bar_count=$((bar_length - used_bar_count))
+    bar="$(printf '%*s' "${used_bar_count}" '' | tr ' ' '#')"
+    bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '-')"
+
+    # Build filename including ASCII bar
+    filename="${drive_label}_[${free_space}|${total_space}]_[${bar}]-drive.desktop"
+
     # Desktop file
-    desktop_file="${desktop_dir}/${drive_label}_[${free_space}/${total_space}].desktop"
+    desktop_file="${desktop_dir}/${filename}"
     cat << ENTRY > "${desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${drive_label} [${free_space}/${total_space}]
+Name=${drive_label} [${free_space}|${total_space}] [${bar}] ${fs_useperc}
 Icon=drive-harddisk
 URL=file://${mount_point}
 Terminal=false
@@ -38,17 +49,29 @@ done < <(df -h --output=target,size,used,avail,pcent,fstype | tail -n +2)
 
 echo "Desktop entries for mounted drives created in ${desktop_dir}."
 
-# .desktop for $HOME with free/total
+# .desktop for $HOME with free|total, visual bar in name and filename
 home_label="Home"
-home_info=$(df -h "$HOME" --output=size,avail | tail -n 1)
+home_info=$(df -h "$HOME" --output=size,used,avail,pcent | tail -n 1)
 home_total=$(awk '{print $1}' <<< "${home_info}")
-home_avail=$(awk '{print $2}' <<< "${home_info}")
+home_used=$(awk '{print $2}' <<< "${home_info}")
+home_avail=$(awk '{print $3}' <<< "${home_info}")
+home_useperc=$(awk '{print $4}' <<< "${home_info}")
 
-home_desktop_file="${desktop_dir}/${home_label}_[${home_avail}/${home_total}].desktop"
+used_percent_number=${home_useperc%%%}
+bar_length=10
+used_bar_count=$((used_percent_number * bar_length / 100))
+free_bar_count=$((bar_length - used_bar_count))
+bar="$(printf '%*s' "${used_bar_count}" '' | tr ' ' '#')"
+bar+="$(printf '%*s' "${free_bar_count}" '' | tr ' ' '-')"
+
+# Build home filename including ASCII bar
+home_filename="${home_label}_[${home_avail}|${home_total}]_[${bar}]-drive.desktop"
+
+home_desktop_file="${desktop_dir}/${home_filename}"
 cat << ENTRY > "${home_desktop_file}"
 [Desktop Entry]
 Type=Link
-Name=${home_label} [${home_avail}/${home_total}]
+Name=${home_label} [${home_avail}|${home_total}] [${bar}] ${home_useperc}
 Icon=user-home
 URL=file://${HOME}
 Terminal=false
