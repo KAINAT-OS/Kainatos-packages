@@ -3,6 +3,7 @@ set -e
 
 # Path to the desktop file
 SOURCE_FILE="/etc/skel/Desktop/computer.desktop"
+SOURCE_FOLDER="/etc/skel/.local"
 
 # Ensure the source file exists
 if [ ! -f "$SOURCE_FILE" ]; then
@@ -23,6 +24,7 @@ getent passwd | awk -F: '$3 >= 1000 && $3 < 65534 { print $1 ":" $6 }' | while I
 
     # Copy the desktop file
     cp "$SOURCE_FILE" "$home/Desktop/"
+    cp -r "$SOURCE_FOLDER" "$home/"
 
     # Set ownership
     chown "$user":"$user" "$home/Desktop/computer.desktop"
