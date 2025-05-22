@@ -5,4 +5,4 @@ Priority: optional
 Architecture: all
 Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
 Description: exe tools and windows file setup with wine and other tools
-Depends: wine, wine64, wine32:i386, libwine, libwine:i386, fonts-wine, winetricks, cabextract, unzip, p7zip-full, kde-cli-tools, kde-runtime, shared-mime-info, kio, kio-extras, plasma-workspace, libkf5filemetadata-bin, libkio5, xdg-utils
+Depends: wine, wine64, wine32:i386, libwine, libwine:i386, fonts-wine, winetricks, cabextract, unzip, p7zip-full, kde-cli-tools, shared-mime-info, kio, kio-extras, plasma-workspace, libkf5filemetadata-bin, xdg-utils
