@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Run with kexe
+Exec=wine start /unix %f
+Type=Application
+MimeType=application/x-ms-dos-executable;
+Icon=folder-windows-symbolic
+NoDisplay=true
