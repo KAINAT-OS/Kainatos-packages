@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-if dpkg -s openrazer-meta &> /dev/null; then
-    polychromatic-controller
-else
-    razer-setup
-fi
-

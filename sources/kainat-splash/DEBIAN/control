@@ -1,7 +1,0 @@
-Package: kainat-splash
-Version: 25.1-2
-Section: misc
-Priority: optional
-Architecture: amd64
-Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
-Description: Custom Godot-based splash screen for Kainat Os

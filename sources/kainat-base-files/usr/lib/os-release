@@ -1,9 +1,0 @@
-NAME="Kainat OS"
-VERSION="LTS 25.1"
-ID=kainat
-ID_LIKE=debian
-PRETTY_NAME="Kainat OS LTS 25.1"
-VERSION_ID="25.1"
-HOME_URL="https://github.com/KAINAT-OS/KainatOS"
-SUPPORT_URL="https://github.com/KAINAT-OS/KainatOS/issues"
-BUG_REPORT_URL="https://github.com/KAINAT-OS/KainatOS/issues"

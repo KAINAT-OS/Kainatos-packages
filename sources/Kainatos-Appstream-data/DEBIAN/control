@@ -1,8 +1,0 @@
-Package: KainatOS-appstream-data
-Version: 25.4
-Section: base
-Priority: optional
-Architecture: all
-Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
-Depends: appstream
-Description: ammstream-data and other necessary things.
