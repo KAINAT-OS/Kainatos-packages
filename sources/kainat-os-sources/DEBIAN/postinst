@@ -22,12 +22,6 @@ case "$1" in
     printf '%s\n' 'Acquire::Check-Valid-Until "false";' \
       > /etc/apt/apt.conf.d/80snapshot
 
-    if [ -f /etc/apt/preferences.d/force-testing ]; then
-        rm /etc/apt/preferences.d/force-testing
-    else
-        apt-get update || true
-    fi
-
     if [ "$CURRENT_SOURCE_VERSION" = "$NEXT_SOURCE_VERSION" ]; then
         # Same version: do a full upgrade
         apt-get update && apt-get dist-upgrade || true
