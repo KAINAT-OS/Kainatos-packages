@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+if ! kdialog --yesno "Install the Razer driver and required applications. Continue?"; then
+    # User clicked “No”
+    kdialog --sorry "Installation canceled."
+    exit 1
+fi
+
+# Ensure non-interactive installs
+export DEBIAN_FRONTEND=noninteractive
+
+# 1. Update APT and install kernel headers, DKMS, and build tools
+apt-get update -qq                                    # update package lists :contentReference[oaicite:0]{index=0}
+apt-get install -y --no-install-recommends \
+    dkms build-essential linux-headers-$(uname -r)    # for out-of-tree module build :contentReference[oaicite:1]{index=1}
+
+# 2. Add openSUSE Build Service repo for OpenRazer (Debian 12)
+echo 'deb http://download.opensuse.org/repositories/hardware:/razer/Debian_12/ /' \
+    > /etc/apt/sources.list.d/openrazer-razer.list     # OBS repo for latest OpenRazer :contentReference[oaicite:2]{index=2}
+curl -fsSL https://download.opensuse.org/repositories/hardware:razer/Debian_12/Release.key \
+    | gpg --dearmor \
+    > /usr/share/keyrings/openrazer-razer.gpg         # add OBS GPG key :contentReference[oaicite:3]{index=3}
+
+# 3. Install OpenRazer
+apt-get update -qq                                    # refresh after adding repo :contentReference[oaicite:4]{index=4}
+apt-get install -y openrazer-meta                     # metapackage for driver + daemon + Python lib :contentReference[oaicite:5]{index=5}
+
+# 4. Add default user (logged-in) to plugdev for USB access
+if [ -n "${SUDO_USER:-}" ]; then
+    usermod -aG plugdev "$SUDO_USER"                 # allow non-root to use devices :contentReference[oaicite:6]{index=6}
+else
+    echo "Warning: could not detect SUDO_USER; please add users to plugdev manually." >&2
+fi
+
+# 5. Add Polychromatic PPA (mapped to Debian 12 “noble” series)
+echo 'deb [signed-by=/usr/share/keyrings/polychromatic.gpg] \
+    http://ppa.launchpad.net/polychromatic/stable/ubuntu noble main' \
+    > /etc/apt/sources.list.d/polychromatic.list       # PPA for Polychromatic :contentReference[oaicite:7]{index=7}
+curl -fsSL 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xc0d54c34d00160459588000e96b9cd7c22e2c8c5' \
+    | gpg --dearmor \
+    > /usr/share/keyrings/polychromatic.gpg            # import PPA key :contentReference[oaicite:8]{index=8}
+
+# 6. Install Polychromatic frontend
+apt-get update -qq                                    # refresh after adding PPA :contentReference[oaicite:9]{index=9}
+apt-get install -y polychromatic                      # Polychromatic GUI/tray app :contentReference[oaicite:10]{index=10}
+
+# 7. Final notice
+echo "OpenRazer + Polychromatic installation complete. Reboot for changes to take effect."
