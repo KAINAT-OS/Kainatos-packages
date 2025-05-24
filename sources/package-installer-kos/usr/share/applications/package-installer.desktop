@@ -2,7 +2,7 @@
 Categories=Utility;
 Comment[en_US]=Select and install an AppImage and deb system‑wide or per‑user
 Comment=Select and install an AppImage and deb system‑wide or per‑user
-Exec=pkexec /usr/bin/deb-installer-kainatos.x86_64 %u
+Exec=/usr/bin/deb-installer-kainatos.x86_64 %u
 GenericName[en_US]=
 GenericName=
 Icon=/usr/share/pixmaps/package-manager-kos

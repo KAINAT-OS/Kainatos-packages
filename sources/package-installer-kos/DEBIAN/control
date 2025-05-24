@@ -1,8 +1,7 @@
 Package: package-installer-kainatos
-Version: 25.1.2
+Version: 25.1.3
 Maintainer: Kainat Quaderee <kainat.quaderee@gmail.com>
 Architecture: amd64
-Depends: kainatos-appimage-installer
 Description: Package installer for .deb and AppImage files
  This is a package installer tool designed to install .deb and AppImage files
  system-wide or per-user.
