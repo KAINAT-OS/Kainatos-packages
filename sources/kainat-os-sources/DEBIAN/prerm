@@ -4,12 +4,8 @@ set -e
 case "$1" in
   remove|upgrade|deconfigure)
     # Only remove diversion if it exists
-    if dpkg-divert --list | grep -F '/etc/apt/sources.list.distrib' >/dev/null; then
-      dpkg-divert --package kainat-os-sources \
-                   --remove \
-                   --rename /etc/apt/sources.list
-    fi
-    ;;
+     dpkg-divert --package kainat-os-sources --remove --rename \
+        --divert /etc/apt/sources.list.divert /etc/apt/sources.list
   *)
     # No action needed for other prerm states
     ;;

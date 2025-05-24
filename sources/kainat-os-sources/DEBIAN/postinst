@@ -3,15 +3,10 @@ set -e
 
 case "$1" in
   configure)
-    dpkg-divert --package kainat-os-sources \
-                 --divert /etc/apt/sources.list.distrib \
-                 --rename /etc/apt/sources.list
-    install -m 644 /usr/share/kainat-os-sources/sources.list.master \
-                   /etc/apt/sources.list
     mkdir -p /etc/apt/apt.conf.d
     printf '%s\n' 'Acquire::Check-Valid-Until "false";' \
       > /etc/apt/apt.conf.d/80snapshot
-    apt-get update || true
+    apt-get update && apt get-full upgrade || true
     ;;
   triggered)
     install -m 644 /usr/share/kainat-os-sources/sources.list.master \
