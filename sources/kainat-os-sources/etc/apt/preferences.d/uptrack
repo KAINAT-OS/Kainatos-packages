@@ -1,0 +1,23 @@
+Package: appstream
+Pin: release a=sid
+Pin-Priority: 1002
+
+
+Package: shared-mime-info
+Pin: release a=sid
+Pin-Priority: 1002
+
+
+Package: libappstream5
+Pin: release a=sid
+Pin-Priority: 1002
+
+
+Package: libc6
+Pin: release a=sid
+Pin-Priority: 1002
+
+
+Package: libglib2.0-0t64
+Pin: release a=sid
+Pin-Priority: 1002
