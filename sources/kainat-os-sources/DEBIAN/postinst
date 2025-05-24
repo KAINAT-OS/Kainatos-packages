@@ -6,7 +6,12 @@ case "$1" in
     mkdir -p /etc/apt/apt.conf.d
     printf '%s\n' 'Acquire::Check-Valid-Until "false";' \
       > /etc/apt/apt.conf.d/80snapshot
-    apt-get update && apt get full-upgrade -y || true
+    if [ -f "/etc/apt/preferences.d/force-testing" ]; then
+      rm /etc/apt/preferences.d/force-testing
+      apt-get update && apt get full-upgrade -y || true
+    else
+      apt-get update || true
+    fi
     ;;
   triggered)
     install -m 644 /usr/share/kainat-os-sources/sources.list.master \
