@@ -1,5 +1,5 @@
 Package: package-installer-kainatos
-Version: 25.1.4
+Version: 25.1.5
 Maintainer: Kainat Quaderee <kainat.quaderee@gmail.com>
 Architecture: amd64
 Description: Package installer for .deb and AppImage files
