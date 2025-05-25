@@ -1,23 +1,23 @@
 Package: appstream
-Pin: origin snapshot.debian.org, release a=sid
+Pin: release a=sid
 Pin-Priority: 1002
 
 
 Package: shared-mime-info
-Pin: origin snapshot.debian.org, release a=sid
+Pin: release a=sid
 Pin-Priority: 1002
 
 
 Package: libappstream5
-Pin: origin snapshot.debian.org, release a=sid
+Pin: release a=sid
 Pin-Priority: 1002
 
 
 Package: libc6
-Pin: origin snapshot.debian.org, release a=sid
+Pin: release a=sid
 Pin-Priority: 1002
 
 
 Package: libglib2.0-0t64
-Pin: origin snapshot.debian.org, release a=sid
+Pin: release a=sid
 Pin-Priority: 1002
