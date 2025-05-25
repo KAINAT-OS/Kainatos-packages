@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+PKG=$1
+if apt-cache show "$PKG" > /dev/null 2>&1; then
+    cat <<EOF "/etc/apt/preferences.d/$PKG"
+    Package: $PKG
+    Pin: release a=sid
+    Pin-Priority: 1001
+    EOF
+
+else
+    echo "Package not found in APT."
+fi
+
+exit 0
