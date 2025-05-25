@@ -7,7 +7,7 @@ if apt-cache show "$PKG" > /dev/null 2>&1; then
     Package: $PKG
     Pin: release a=sid
     Pin-Priority: 1001
-    EOF
+EOF
 
 else
     echo "Package not found in APT."
