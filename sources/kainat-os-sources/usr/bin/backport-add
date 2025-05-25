@@ -4,9 +4,9 @@
 PKG=$1
 if apt-cache show "$PKG" > /dev/null 2>&1; then
     cat <<EOF "/etc/apt/preferences.d/$PKG"
-    Package: $PKG
-    Pin: release a=sid
-    Pin-Priority: 1001
+Package: $PKG
+Pin: origin "deb.debian.org"
+Pin-Priority: 1001
 EOF
 
 else

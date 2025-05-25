@@ -5,7 +5,7 @@ preffile="/etc/apt/preferences.d/${PKG}"
 
 if [ -f "$preffile" ]; then
     rm -r "$preffile"
-else:
+else
     echo no backport has been added
 
 fi
