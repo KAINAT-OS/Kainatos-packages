@@ -1,1 +1,1 @@
-deb [trusted=yes] https://KAINAT-OS.github.io/Kainatos-packages/debs/ ./
+deb [trusted=yes] https://sourceforge.net/projects/kainatos/files/debs/ ./
