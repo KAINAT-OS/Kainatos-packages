@@ -1,2 +1,2 @@
-deb [trusted=yes] https://sourceforge.net/projects/kainatos/files/ main
-deb [trusted=yes] https://sourceforge.net/projects/kainatos/files/ nonfree
+deb [trusted=yes] https://sourceforge.net/projects/kainatos/files/ main/
+deb [trusted=yes] https://sourceforge.net/projects/kainatos/files/ nonfree/
