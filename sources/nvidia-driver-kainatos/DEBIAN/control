@@ -1,7 +1,7 @@
 Source: nvidia-driver-kainatos
 Build-Depends: debhelper-compat (= 13)
 Package: nvidia-driver-kainatos
-Version: 25.1.3
+Version: 25.1.4
 Section: misc
 Priority: optional
 Architecture: all
