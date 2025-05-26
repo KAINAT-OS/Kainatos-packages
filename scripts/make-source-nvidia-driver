@@ -4,7 +4,7 @@ set -euo pipefail
 source ./nvidia-version
 
 pk_version="${version%%.*}"
-PKGDIR="sources/nvidia-driver-${pk_version}"
+PKGDIR="nonfree-src/nvidia-driver-${pk_version}"
 TMPDIR="$(mktemp -d)"
 ARCH="amd64"
 
@@ -55,7 +55,6 @@ chmod 0755 "${PKGDIR}/DEBIAN/preinst"
 # 6) postinst: install & register DKMS module
 cat > "${PKGDIR}/DEBIAN/postinst" <<'EOF'
 #!/bin/bash
-set -e
 RUNFILE="/usr/local/nvidia-installer/$(basename NVIDIA-Linux-x86_64-*.run)"
 "$RUNFILE" --dkms --silent
 depmod -a
