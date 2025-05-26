@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+source ./nvidia-version
+
+pk_version="${version%%.*}"
+PKGDIR="sources/nvidia-driver-${pk_version}"
+TMPDIR="$(mktemp -d)"
+ARCH="amd64"
+
+# 1) Fetch the NVIDIA installer
+echo "Downloading NVIDIA ${version} to ${TMPDIR}…"
+wget -qO "${TMPDIR}/NVIDIA-Linux-x86_64-${version}.run" \
+     "https://us.download.nvidia.com/XFree86/Linux-x86_64/${version}/NVIDIA-Linux-x86_64-${version}.run"
+
+# 2) Prepare package tree
+echo "Setting up ${PKGDIR}/…"
+rm -rf "${PKGDIR}"
+mkdir -p \
+  "${PKGDIR}/usr/local/nvidia-installer" \
+  "${PKGDIR}/DEBIAN"
+
+# 3) Copy installer into the package
+cp "${TMPDIR}/NVIDIA-Linux-x86_64-${version}.run" \
+   "${PKGDIR}/usr/local/nvidia-installer/"
+
+# 3.5) chmod +x
+
+chmod +x "${PKGDIR}/usr/local/nvidia-installer/NVIDIA-Linux-x86_64-${version}.run"
+
+# 4) Write control file
+cat > "${PKGDIR}/DEBIAN/control" <<EOF
+Package: nvidia-driver-${pk_version}
+Version: ${version}-1
+Section: graphics
+Priority: optional
+Architecture: ${ARCH}
+Depends: dkms, build-essential, linux-headers-amd64
+Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
+Description: NVIDIA proprietary GPU driver ${version}
+ This package installs the NVIDIA driver and builds kernel modules via DKMS.
+EOF
+
+# 5) preinst: sanity checks
+cat > "${PKGDIR}/DEBIAN/preinst" <<'EOF'
+#!/bin/bash
+set -e
+if [[ $EUID -ne 0 ]]; then
+  echo "ERROR: must be root to install this package." >&2
+  exit 1
+fi
+EOF
+chmod 0755 "${PKGDIR}/DEBIAN/preinst"
+
+# 6) postinst: install & register DKMS module
+cat > "${PKGDIR}/DEBIAN/postinst" <<'EOF'
+#!/bin/bash
+set -e
+RUNFILE="/usr/local/nvidia-installer/$(basename NVIDIA-Linux-x86_64-*.run)"
+"$RUNFILE" --dkms --silent
+depmod -a
+update-initramfs -u
+exit 0
+EOF
+chmod 0755 "${PKGDIR}/DEBIAN/postinst"
+
+# 7) prerm: uninstall via the same runfile
+cat > "${PKGDIR}/DEBIAN/prerm" <<'EOF'
+#!/bin/bash
+set -e
+RUNFILE="/usr/local/nvidia-installer/$(basename NVIDIA-Linux-x86_64-*.run)"
+if [[ -x "\$RUNFILE" ]]; then
+  "\$RUNFILE" --uninstall --silent
+fi
+exit 0
+EOF
+chmod 0755 "${PKGDIR}/DEBIAN/prerm"
+
+# 9) cleanup
+rm -rf "${TMPDIR}"
