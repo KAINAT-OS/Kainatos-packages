@@ -1,9 +1,0 @@
-Package: kainat-os-sources
-Version: 25.1.26
-Section: admin
-Priority: optional
-Architecture: all
-Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
-Depends: dpkg (>= 1.14.17)
-Description: Kainat OS custom APT sources list
- A package providing and protecting /etc/apt/sources.list for Kainat OS LTS 25.1.

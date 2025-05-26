@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=25.1
-Type=Application
-Name=Kainat OS System Settings
-Exec=/bin/kainat-settings.x86_64
-Icon=/usr/share/binary-settings/icon.png
-Categories=Settings;
-Terminal=false

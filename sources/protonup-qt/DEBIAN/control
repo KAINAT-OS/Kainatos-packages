@@ -1,8 +1,0 @@
-Source: binary-os-core
-Maintainer:i01binary
-Priority: optional
-Version: 2.10.2
-Package: protonup-qt
-Architecture: amd64
-Description:Install and manage Proton-GE for Steam and Wine-GE for Lutris with this graphical user interface.
-            Based on AUNaseef's ProtonUp, made with Python 3 and Qt 6.
