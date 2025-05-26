@@ -40,12 +40,17 @@ jobs:
           rm -r ./sources
 
 
-      - name: commit and push
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Push .deb files to SourceForge via SFTP
+        env:
+          SF_USER: ${{ secrets.SOURCE_FORGE_USERNAME }}
+          SF_PASS: ${{ secrets.SOURCE_FORGE_PASSWORD }}
         run: |
-          sudo apt-get install git-lfs
-          git lfs install
-          git config --global user.email "kainatquaderee@users.noreply.github.com"
-          git config --global user.name "kainatquaderee"
-          git add .
-          git commit --message 'auto-commited-by-action'
-          git push origin HEAD:ppa --force
+          lftp -u "$SF_USER","$SF_PASS" sftp://frs.sourceforge.net <<EOF
+          set ssl:verify-certificate no
+          cd /home/frs/project/kainatos/main/
+          mirror -R ./debs .
+          bye
+          EOF
