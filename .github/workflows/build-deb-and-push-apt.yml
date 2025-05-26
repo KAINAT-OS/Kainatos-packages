@@ -51,7 +51,7 @@ jobs:
           lftp -u "$SF_USER","$SF_PASS" sftp://frs.sourceforge.net <<EOF
           set sftp:auto-confirm yes
           set ssl:verify-certificate no
-          cd /home/frs/project/kainatos/main/
+          cd /home/frs/project/kainatos/debs/
           mirror -R ./debs .
           bye
           EOF
