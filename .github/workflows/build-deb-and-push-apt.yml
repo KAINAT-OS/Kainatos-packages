@@ -5,19 +5,11 @@ on:
     branches:
       - main
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   build-and-index:
     runs-on: ubuntu-latest
-
-    env:
-      SF_USER: ${{ secrets.SOURCE_FORGE_USERNAME }}
-      SF_PASS: ${{ secrets.SOURCE_FORGE_PASSWORD }}
-      SF_HOST: frs.sourceforge.net
-      REMOTE_DIR: /home/frs/project/kainatos/debs
 
     steps:
       - name: Checkout repository
@@ -25,61 +17,41 @@ jobs:
 
       - name: protonup qt works
         run: |
-          ./scripts/protonup-qt/download-protonup-qt.sh
-          ./scripts/protonup-qt/appimg-to-deb.sh ./*.AppImage
+            ./scripts/protonup-qt/download-protonup-qt.sh
+            ./scripts/protonup-qt/appimg-to-deb.sh ./*.AppImage
 
       - name: Install Debian packaging tools
-        run: sudo apt-get update && sudo apt-get install -y dpkg-dev lftp
+        run: sudo apt-get update && sudo apt-get install -y dpkg-dev
 
       - name: Build .deb packages
         run: |
-          mkdir -p debs
+          mkdir -p ./debs
           for dir in ./sources/*; do
-            dpkg-deb --root-owner-group --build "$dir" "debs/$(basename "$dir").deb"
+            dpkg-deb --root-owner-group --build "$dir" "./debs/$(basename "$dir").deb"
           done
 
-      - name: Fetch existing Packages.gz
-        run: |
-          mkdir -p debs
-          lftp -u "$SF_USER","$SF_PASS" sftp://$SF_HOST <<EOF
-            set sftp:auto-confirm yes
-            set ssl:verify-certificate no
-            cd $REMOTE_DIR
-            get Packages.gz -o debs/Packages.gz
-            bye
-          EOF
-
-      - name: Append new package stanzas without duplicates
+      - name: Generate APT index
         run: |
           cd debs
-          # Decompress the existing index
-          gunzip -kf Packages.gz
+          dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
 
-          # For each freshly-built .deb:
-          for pkg in *.deb; do
-            pkgname=$(dpkg-deb -f "$pkg" Package)
-            # Remove any old stanza for this package using sed
-            sed "/^Package: ${pkgname}\$/, /^$/d" Packages > Packages.tmp
-            mv Packages.tmp Packages
-
-            # Generate current stanza and append (skip the blank header)
-            dpkg-deb -I "$pkg" | sed '1,/^$/d' >> Packages
-          done
-
-          # Recompress into Packages.gz
-          gzip -9c Packages > Packages.gz
-
-
-      - name: Push updates to SourceForge
+      - name: remove sources
         run: |
-          lftp -u "$SF_USER","$SF_PASS" sftp://$SF_HOST <<EOF
-            set sftp:auto-confirm yes
-            set ssl:verify-certificate no
-            lcd debs
-            cd $REMOTE_DIR
-            mput *.deb Packages.gz
-            bye
-          EOF
+          rm -r ./sources
 
-      - name: Clean up sources
-        run: rm -rf ./sources
+
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      - name: Push .deb files to SourceForge via SFTP
+        env:
+          SF_USER: ${{ secrets.SOURCE_FORGE_USERNAME }}
+          SF_PASS: ${{ secrets.SOURCE_FORGE_PASSWORD }}
+        run: |
+          lftp -u "$SF_USER","$SF_PASS" sftp://frs.sourceforge.net <<EOF
+          set sftp:auto-confirm yes
+          set ssl:verify-certificate no
+          cd /home/frs/project/kainatos/debs/
+          mirror -R ./debs .
+          bye
+          EOF
