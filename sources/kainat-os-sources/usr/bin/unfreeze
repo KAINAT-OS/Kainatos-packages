@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# unfreeze: manage APT pinning for packages (add/remove), optionally including dependencies
+# unfreeze: manage APT pinning for packages (add/remove), optionally including dependencies recursively
 # Usage: unfreeze <add|remove> [--depends] <pkg1> [pkg2 ...]
 
 set -euo pipefail
@@ -26,26 +26,43 @@ if [[ $# -lt 1 ]]; then
   exit 1
 fi
 
-# Function to gather package list (including dependencies if requested)
+# Function to sanitize filename
+sanitize_filename() {
+  echo "$1" | sed 's/[^a-zA-Z0-9._-]/_/g'
+}
+
+# Function to gather package list, recursing into dependencies if requested
 get_pkg_list() {
-  local pkg="$1"
-  local pkgs=("$pkg")
-  if \$INCLUDE_DEPS && [[ "$ACTION" == "add" ]]; then
-    # Gather direct dependencies
-    while read -r dep; do
-      pkgs+=("$dep")
-    done < <(apt-cache depends "$pkg" 2>/dev/null | awk '/Depends:/ {print $2}')
-  fi
+  local root="$1"
+  local -a queue=("$root")
+  declare -A seen
+  seen["$root"]=1
+  local -a pkgs=()
+
+  while [[ ${#queue[@]} -gt 0 ]]; do
+    local cur="${queue[0]}"
+    queue=("${queue[@]:1}")
+    pkgs+=("$cur")
+
+    if [[ "$INCLUDE_DEPS" == "true" ]]; then
+      while IFS= read -r dep; do
+        if [[ -n "$dep" && -z "${seen[$dep]:-}" ]]; then
+          seen["$dep"]=1
+          queue+=("$dep")
+        fi
+      done < <(apt-cache depends "$cur" 2>/dev/null | awk '/Depends:/ {print $2}')
+    fi
+  done
+
   printf "%s\n" "${pkgs[@]}"
 }
 
 for PKG in "$@"; do
-  # Build list of packages to handle
-  MAPFILE=( )
-  mapfile -t MAPFILE < <(get_pkg_list "$PKG")
+  mapfile -t TARGET_PKGS < <(get_pkg_list "$PKG")
 
-  for P in "${MAPFILE[@]}"; do
-    PREF_FILE="/etc/apt/preferences.d/$P"
+  for P in "${TARGET_PKGS[@]}"; do
+    SAFE_NAME="$(sanitize_filename "$P")"
+    PREF_FILE="/etc/apt/preferences.d/$SAFE_NAME.pref"
 
     if [[ "$ACTION" == "add" ]]; then
       if ! apt-cache show "$P" > /dev/null 2>&1; then
@@ -58,7 +75,7 @@ Package: $P
 Pin: origin "deb.debian.org"
 Pin-Priority: 1001
 EOF
-      echo "[+] Pin created for '$P'"
+      echo "[+] Pin created for '$P' as $SAFE_NAME.pref"
 
     else # remove
       if [[ -f "$PREF_FILE" ]]; then
