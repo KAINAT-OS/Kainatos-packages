@@ -58,17 +58,17 @@ jobs:
           # For each freshly-built .deb:
           for pkg in *.deb; do
             pkgname=$(dpkg-deb -f "$pkg" Package)
-            # Remove any old stanza for this package
-            # We match from "Package: <pkgname>" until the next blank line
-            grep -v -Pzo "(?s)^Package:\s*${pkgname}.*?(?=\n\n)" Packages > Packages.tmp
+            # Remove any old stanza for this package using sed
+            sed "/^Package: ${pkgname}\$/, /^$/d" Packages > Packages.tmp
             mv Packages.tmp Packages
 
-            # Generate current stanza and append
-            dpkg-deb -I "$pkg" | sed '1, /^$/d' >> Packages
+            # Generate current stanza and append (skip the blank header)
+            dpkg-deb -I "$pkg" | sed '1,/^$/d' >> Packages
           done
 
           # Recompress into Packages.gz
           gzip -9c Packages > Packages.gz
+
 
       - name: Push updates to SourceForge
         run: |
