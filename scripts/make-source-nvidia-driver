@@ -55,7 +55,7 @@ chmod 0755 "${PKGDIR}/DEBIAN/preinst"
 # 6) postinst: install & register DKMS module
 cat > "${PKGDIR}/DEBIAN/postinst" <<'EOF'
 #!/bin/bash
-RUNFILE="/usr/local/nvidia-installer/$(basename NVIDIA-Linux-x86_64-*.run)"
+RUNFILE="/usr/local/nvidia-installer/$(basename NVIDIA-Linux-x86_64-${version}.run)"
 "$RUNFILE" --dkms --silent
 depmod -a
 update-initramfs -u
@@ -67,7 +67,7 @@ chmod 0755 "${PKGDIR}/DEBIAN/postinst"
 cat > "${PKGDIR}/DEBIAN/prerm" <<'EOF'
 #!/bin/bash
 set -e
-RUNFILE="/usr/local/nvidia-installer/$(basename NVIDIA-Linux-x86_64-*.run)"
+RUNFILE="/usr/local/nvidia-installer/$(basename NVIDIA-Linux-x86_64-${version}.run)"
 if [[ -x "\$RUNFILE" ]]; then
   "\$RUNFILE" --uninstall --silent
 fi
