@@ -1,91 +1,89 @@
 #!/bin/bash
-
-# unfreeze: manage APT pinning for packages (add/remove), optionally including dependencies recursively
+# unfreeze: manage APT pinning for packages (add/remove), including deps recursively
 # Usage: unfreeze <add|remove> [--depends] <pkg1> [pkg2 ...]
-
 set -euo pipefail
 
 ACTION="$1"
 shift
 
-# Check for --depends flag
 INCLUDE_DEPS=false
 if [[ "${1:-}" == "--depends" ]]; then
-  INCLUDE_DEPS=true
-  shift
+    INCLUDE_DEPS=true
+    shift
 fi
 
 if [[ "$ACTION" != "add" && "$ACTION" != "remove" ]]; then
-  echo "Usage: $0 add|remove [--depends] <package1> [package2 ...]"
-  exit 1
+    echo "Usage: $0 add|remove [--depends] <package1> [package2 ...]"
+    exit 1
 fi
 
 if [[ $# -lt 1 ]]; then
-  echo "Error: At least one package name must be provided."
-  echo "Usage: $0 add|remove [--depends] <package1> [package2 ...]"
-  exit 1
+    echo "Error: At least one package name must be provided."
+    exit 1
 fi
 
-# Function to sanitize filename
+# Sanitize filenames (canonicalize special chars)
 sanitize_filename() {
-  echo "$1" | sed 's/[^a-zA-Z0-9._-]/_/g'
+    echo "$1" | sed 's/[^a-zA-Z0-9._-]/_/g'
 }
 
-# Function to gather package list, recursing into dependencies if requested
+# Collect packages with optional recursive dependency resolution
 get_pkg_list() {
-  local root="$1"
-  local -a queue=("$root")
-  declare -A seen
-  seen["$root"]=1
-  local -a pkgs=()
+    local root="$1"
+    local -a queue=("$root")
+    declare -A seen
+    seen["$root"]=1
+    local -a pkgs=()
 
-  while [[ ${#queue[@]} -gt 0 ]]; do
-    local cur="${queue[0]}"
-    queue=("${queue[@]:1}")
-    pkgs+=("$cur")
+    while [[ ${#queue[@]} -gt 0 ]]; do
+        local cur="${queue[0]}"
+        queue=("${queue[@]:1}")
+        pkgs+=("$cur")
 
-    if [[ "$INCLUDE_DEPS" == "true" ]]; then
-      while IFS= read -r dep; do
-        if [[ -n "$dep" && -z "${seen[$dep]:-}" ]]; then
-          seen["$dep"]=1
-          queue+=("$dep")
+        if [[ "$INCLUDE_DEPS" == "true" ]]; then
+            # Capture dependencies and pre-depends recursively
+            while IFS= read -r dep; do
+                if [[ -n "$dep" && -z "${seen[$dep]:-}" ]]; then
+                    seen["$dep"]=1
+                    queue+=("$dep")
+                fi
+            done < <(
+                apt-cache depends "$cur" 2>/dev/null \
+                | awk '/^(Depends|Pre-Depends):/ {print $2}'
+            )
         fi
-      done < <(apt-cache depends "$cur" 2>/dev/null | awk '/Depends:/ {print $2}')
-    fi
-  done
+    done
 
-  printf "%s\n" "${pkgs[@]}"
+    printf "%s\n" "${pkgs[@]}"
 }
 
 for PKG in "$@"; do
-  mapfile -t TARGET_PKGS < <(get_pkg_list "$PKG")
+    mapfile -t TARGET_PKGS < <(get_pkg_list "$PKG")
+    for P in "${TARGET_PKGS[@]}"; do
+        SAFE_NAME="$(sanitize_filename "$P")"
+        PREF_FILE="/etc/apt/preferences.d/$SAFE_NAME.pref"
 
-  for P in "${TARGET_PKGS[@]}"; do
-    SAFE_NAME="$(sanitize_filename "$P")"
-    PREF_FILE="/etc/apt/preferences.d/$SAFE_NAME.pref"
+        if [[ "$ACTION" == "add" ]]; then
+            if ! apt-cache show "$P" &> /dev/null; then
+                echo "[!] Package '$P' not found in APT, skipping."
+                continue
+            fi
 
-    if [[ "$ACTION" == "add" ]]; then
-      if ! apt-cache show "$P" > /dev/null 2>&1; then
-        echo "[!] Package '$P' not found in APT, skipping."
-        continue
-      fi
-
-      cat <<EOF | sudo tee "$PREF_FILE" > /dev/null
+            cat <<EOF | sudo tee "$PREF_FILE" &> /dev/null
 Package: $P
 Pin: release n=sid
 Pin-Priority: 1001
 EOF
-      echo "[+] Pin created for '$P' as $SAFE_NAME.pref"
+            echo "[+] Pin created for '$P' in $SAFE_NAME.pref"
 
-    else # remove
-      if [[ -f "$PREF_FILE" ]]; then
-        sudo rm -f "$PREF_FILE"
-        echo "[-] Pin file removed for '$P'"
-      else
-        echo "[!] No pin file for '$P', skipping."
-      fi
-    fi
-  done
+        else # remove action
+            if [[ -f "$PREF_FILE" ]]; then
+                sudo rm -f "$PREF_FILE"
+                echo "[-] Removed pin file for '$P'"
+            else
+                echo "[!] No pin file found for '$P'"
+            fi
+        fi
+    done
 done
-
 exit 0
