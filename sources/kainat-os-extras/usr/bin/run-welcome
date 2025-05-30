@@ -1,9 +1,10 @@
 #!/bin/bash
-
-if [ -f "$HOME/.config/welcome.lock" ]; then
+LOCK_FILE="$HOME/.config/welcome.lock"
+if [ -f $LOCK_FILE ]; then
     exit 0
 else
     welcome-slide.x86_64
+    touch $LOCK_FILE
 fi
 
 exit 0
