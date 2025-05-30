@@ -1,0 +1,22 @@
+#!/bin/sh
+set -e
+
+# This script is run by dpkg after package installation/configuration.
+
+case "$1" in
+  configure)
+    # only try to use systemd if it's available
+    if command -v systemctl >/dev/null 2>&1; then
+      # reload systemd to pick up your unit file
+      systemctl daemon-reload || true
+
+      # enable the service so it runs on every boot
+      systemctl enable chat-sotero.service || true
+
+      # (optionally) start it right now
+      systemctl start chat-sotero.service || true
+    fi
+    ;;
+esac
+
+exit 0
