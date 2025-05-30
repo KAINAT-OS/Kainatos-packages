@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Install Kainat OS
+GenericName=Calamares Installer
+Exec=calamares-install-kainatos
+Comment=Calamares — Installer for KainatOS Live
+Keywords=calamares;system;install;KainatOS;installer
+Icon=install-kainat
+Terminal=false
+Categories=Qt;System;
+StartupWMClass=calamares
+StartupNotify=True
