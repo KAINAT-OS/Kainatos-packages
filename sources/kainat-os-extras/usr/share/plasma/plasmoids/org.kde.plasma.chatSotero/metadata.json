@@ -1,0 +1,26 @@
+{
+  "KPlugin": {
+    "Authors": [
+      {
+        "Name": "Kainat Quaderee",
+        "Email": "kainatquaderee@gmail.com"
+      }
+    ],
+    "Category": "Online Services",
+    "Description": "Add an AI chatbot on your desktop.",
+    "Icon": "chat-sotero",
+    "Id": "org.kde.plasma.chatSotero",
+    "License": "GPL-2.0+",
+    "Name": "chat-Sotero",
+    "Name[en_GB]": "chat-Sotero",
+    "Name[x-test]": "xxchat-Soteroxx",
+    "ServiceTypes": [
+      "Plasma/Applet"
+    ],
+    "Version": "0.2.0",
+    "Website": "http://localhost:7860/"
+  },
+  "X-Plasma-API": "declarativeappletscript",
+  "X-Plasma-MainScript": "ui/main.qml",
+  "X-Plasma-StandAloneApp": true
+}

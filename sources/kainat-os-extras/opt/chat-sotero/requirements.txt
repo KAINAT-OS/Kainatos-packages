@@ -1,0 +1,4 @@
+hugchat
+gradio
+python-dotenv
+huggingface-hub

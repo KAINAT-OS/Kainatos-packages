@@ -1,0 +1,12 @@
+[Unit]
+Description=Run chat-sotero at Boot
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/chat-sotero/start.sh
+WorkingDirectory=/opt/chat-sotero/
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

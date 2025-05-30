@@ -1,0 +1,18 @@
+[Desktop Entry]
+Categories=Utility;Network;
+Comment[en_US]=🧠 Launch the Chat Sotero Gradio app
+Comment=🧠 Launch the Chat Sotero Gradio app
+Exec=thorium-browser --app=https://hf.co/chat/assistant/683577a7894831df54b7c2c0
+GenericName[en_US]=
+GenericName=
+Icon=chat-sotero
+MimeType=
+Name[en_US]=Chat Sotero
+Name=Chat Sotero
+Path=
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=
