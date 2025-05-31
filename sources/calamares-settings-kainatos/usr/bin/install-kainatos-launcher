@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ -d /run/live ] || [ -d /lib/live/mount/medium ] || mountpoint -q /cow; then
+Hname=$(hostname)
+
+if [[ $Hname == "kainat" ]]; then
     install-kainatos-launcher.x86_64
 else
     exit 0

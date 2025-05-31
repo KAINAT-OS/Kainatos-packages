@@ -1,6 +1,8 @@
 #!/bin/bash
 LOCK_FILE="$HOME/.config/welcome.lock"
-if [ -f $LOCK_FILE ]; then
+Hname=$(hostname)
+
+if [ -f $LOCK_FILE ] || [[ ! $Hname == "kainat" ]]; then
     exit 0
 else
     welcome-slide.x86_64

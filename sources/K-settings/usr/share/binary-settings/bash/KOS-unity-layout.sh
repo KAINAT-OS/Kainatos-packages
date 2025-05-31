@@ -41,6 +41,8 @@ digitalClock.writeConfig("alignment", "center")
 topPanel.addWidget("org.kde.plasma.panelspacer")
 
 // Add the System Tray widget to the top panel and place it on the right side
+var chatbot = topPanel.addWidget("org.kde.plasma.chatSotero")
+topPanel.addWidget("org.kde.plasma.marginsseparator")
 var systemTray = topPanel.addWidget("org.kde.plasma.systemtray")
 systemTray.currentConfigGroup = ["Look/Feel"]
 systemTray.writeConfig("alignment", "right")

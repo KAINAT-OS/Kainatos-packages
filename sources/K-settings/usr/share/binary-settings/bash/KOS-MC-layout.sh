@@ -39,6 +39,8 @@ digitalClock.currentConfigGroup = ["Look/Feel"]
 digitalClock.writeConfig("alignment", "center")
 
 // Add a spacer between the clock and system tray
+var chatbot = topPanel.addWidget("org.kde.plasma.chatSotero")
+topPanel.addWidget("org.kde.plasma.marginsseparator")
 topPanel.addWidget("org.kde.plasma.panelspacer")
 
 // Add the System Tray widget to the top panel and place it on the right side

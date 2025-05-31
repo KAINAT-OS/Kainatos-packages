@@ -38,6 +38,8 @@ taskmanager.writeConfig("middleClickAction", "1")
 topPanel.addWidget("org.kde.plasma.marginsseparator")
 // Add the Digital Clock widget to the top panel and center it
 topPanel.addWidget("org.kde.plasma.marginsseparator")
+var chatbot = topPanel.addWidget("org.kde.plasma.chatSotero")
+topPanel.addWidget("org.kde.plasma.marginsseparator")
 var digitalClock = topPanel.addWidget("org.kde.plasma.digitalclock")
 digitalClock.currentConfigGroup = ["Look/Feel"]
 digitalClock.writeConfig("alignment", "center")

@@ -27,6 +27,8 @@ Panel.addWidget("org.kde.plasma.panelspacer")
 
 Panel.addWidget("org.kde.plasma.marginsseparator")
 // Add the System Tray widget to the top panel and place it on the right side
+var chatbot = Panel.addWidget("org.kde.plasma.chatSotero")
+Panel.addWidget("org.kde.plasma.marginsseparator")
 var systemTray = Panel.addWidget("org.kde.plasma.systemtray")
 systemTray.currentConfigGroup = ["Look/Feel"]
 systemTray.writeConfig("alignment", "right")
