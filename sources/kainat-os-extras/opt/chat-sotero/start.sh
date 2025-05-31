@@ -1,14 +1,20 @@
 #!/usr/bin/env bash
 set -e
 
+
+# Get the real (logged-in) user and home
+REAL_USER=$(logname)
+USER_HOME=$(eval echo "~$REAL_USER")
+CONFIG_DIR="$USER_HOME/.config/chat-sotero"
+ENV_PATH="$CONFIG_DIR/.env"
+
+
+
+
 # 1) Ensure .env exists
-if [ ! -f .env ]; then
-  cat > .env <<EOF
-HUGGINGFACE_EMAIL=
-HUGGINGFACE_PASSWORD=
-EOF
-  echo ".env created. Please populate HUGGINGFACE_EMAIL and HUGGINGFACE_PASSWORD in .env and rerun."
-  exit 1
+if [ ! -f $ENV_PATH ]; then
+    /usr/bin/kdialog --error "Please set both HUGGINGFACE_EMAIL and HUGGINGFACE_PASSWORD in the chatbot-setup app."
+    hugging-chat-login.x86_64
 fi
 
 # 2) Create & activate virtual environment
@@ -43,12 +49,11 @@ from hugchat import hugchat
 from hugchat.login import Login
 
 # Load credentials
-load_dotenv()
+env_path = os.getenv("ENV_PATH", os.path.expanduser("~/.config/chat-sotero/.env"))
+load_dotenv(dotenv_path=env_path)
 EMAIL = os.getenv("HUGGINGFACE_EMAIL")
 PASSWD = os.getenv("HUGGINGFACE_PASSWORD")
 if not EMAIL or not PASSWD:
-    os.system('kdialog --error "Please set both HUGGINGFACE_EMAIL and HUGGINGFACE_PASSWORD in the chatbot-setup app."')
-    os.system("hugging-chat-login.x86_64")
     exit
 
 # Login & init ChatBot
@@ -131,6 +136,10 @@ if __name__ == "__main__":
 EOF
   echo "app.py created."
 fi
+
+
+export ENV_PATH="$ENV_PATH"
+python app.py
 
 # 6) Launch the app
 python app.py
