@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 set -e
-
+cd /opt/chat-sotero/
 
 # Get the real (logged-in) user and home
-REAL_USER=$(logname)
-USER_HOME=$(eval echo "~$REAL_USER")
-CONFIG_DIR="$USER_HOME/.config/chat-sotero"
-ENV_PATH="$CONFIG_DIR/.env"
+ENV_PATH="$HOME/.config/chat-sotero/.env"
 
+
+echo $ENV_PATH
 
 
 
