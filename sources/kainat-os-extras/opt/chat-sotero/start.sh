@@ -47,7 +47,9 @@ load_dotenv()
 EMAIL = os.getenv("HUGGINGFACE_EMAIL")
 PASSWD = os.getenv("HUGGINGFACE_PASSWORD")
 if not EMAIL or not PASSWD:
-    raise ValueError("Set HUGGINGFACE_EMAIL and HUGGINGFACE_PASSWORD in .env")
+    os.system('kdialog --error "Please set both HUGGINGFACE_EMAIL and HUGGINGFACE_PASSWORD in the chatbot-setup app."')
+    os.system("hugging-chat-login.x86_64")
+    exit
 
 # Login & init ChatBot
 cookie_dir = './cookies/'
