@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ -f ~/.config/kainat-ai/stop.lock ]; then
+    exit 0
+else
+    /opt/chat-sotero/start.sh
+fi

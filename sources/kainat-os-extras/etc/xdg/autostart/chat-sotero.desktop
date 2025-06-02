@@ -1,10 +1,9 @@
 [Desktop Entry]
 Type=Application
-Exec=/opt/chat-sotero/start.sh
-WorkingDirectory=/opt/chat-sotero/
+Exec=launch-kainat-ai
 Hidden=false
 NoDisplay=false
 #X-GNOME-Autostart-enabled=true
 X-KDE-Autostart-enabled=true
-Name=Chat Sotero
-Comment=Start Chat Sotero at login
+Name=Kainat Ai
+Comment=Start Kainat AI at login
