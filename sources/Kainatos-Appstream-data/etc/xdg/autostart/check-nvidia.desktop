@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=/usr/sbin/check-nvidia.sh
+Hidden=false
+NoDisplay=false
+#X-GNOME-Autostart-enabled=true
+X-KDE-autostart-enabled=true
+Name= check nvidia
+Comment=Automatically check if nvidia gpu and inform for driver
+Terminal=false
