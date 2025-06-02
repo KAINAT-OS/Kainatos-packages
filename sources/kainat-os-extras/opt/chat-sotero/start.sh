@@ -116,7 +116,7 @@ css = '''
 '''
 
 with gr.Blocks(css=css) as demo:
-    gr.Markdown("# 🧠 chat Sotero")
+    gr.Markdown("# 💬 Kainat-AI")
     chat_ui = gr.Chatbot(type="messages")
     with gr.Row():
         inp  = gr.Textbox(placeholder="Your message...", show_label=False, scale=4)

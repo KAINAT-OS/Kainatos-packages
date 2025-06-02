@@ -9,16 +9,16 @@
     "Category": "Online Services",
     "Description": "Add an AI chatbot on your desktop.",
     "Icon": "chat-sotero",
-    "Id": "org.kde.plasma.chatSotero",
+    "Id": "kainatos.github.io.kainat-ai",
     "License": "GPL-2.0+",
-    "Name": "chat-Sotero",
-    "Name[en_GB]": "chat-Sotero",
-    "Name[x-test]": "xxchat-Soteroxx",
+    "Name": "kainat-ai",
+    "Name[en_GB]": "Kainat-AI",
+    "Name[x-test]": "xxKainat-AIxx",
     "ServiceTypes": [
       "Plasma/Applet"
     ],
     "Version": "0.2.0",
-    "Website": "http://localhost:7860/"
+    "Website": "kainat-os.github.io"
   },
   "X-Plasma-API": "declarativeappletscript",
   "X-Plasma-MainScript": "ui/main.qml",
