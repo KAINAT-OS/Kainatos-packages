@@ -1,0 +1,9 @@
+Package: live-boot-kainatos
+Version: 25.1.1
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends:
+Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
+Description: Live boot settings for kainat os
+ live boot settings for kainat os

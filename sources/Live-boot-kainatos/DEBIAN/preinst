@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+  configure)
+  dpkg-divert --package live-boot-kainatos --add --rename \
+    --divert /etc/hostname.bak /etc/hostname
+
+  dpkg-divert --package live-boot-kainatos --add --rename \
+    --divert /etc/hosts.bak /etc/hosts
+    ;;
+
+  *)
+    # dpkg policy: do nothing on abort-* actions
+    ;;
+esac
+
+exit 0

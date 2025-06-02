@@ -1,0 +1,23 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+  remove|upgrade|deconfigure)
+    # Only remove the diversion if it actually exists
+    if dpkg-divert --list /etc/hostname >/dev/null 2>&1; then
+      dpkg-divert --package live-boot-kainatos  --remove --rename \
+        --divert /etc/hostname.bak /etc/hostname
+    fi
+
+    if dpkg-divert --list /etc/hosts >/dev/null 2>&1; then
+      dpkg-divert --package live-boot-kainatos  --remove --rename \
+        --divert /etc/hosts.bak /etc/hosts
+    fi
+    ;;  # ← terminate the “remove|upgrade|deconfigure” block
+
+  *)
+    # No action needed on other prerm states
+    ;;
+esac
+
+exit 0
