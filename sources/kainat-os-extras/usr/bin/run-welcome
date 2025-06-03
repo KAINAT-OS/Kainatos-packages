@@ -2,7 +2,8 @@
 LOCK_FILE="$HOME/.config/welcome.lock"
 Hname=$(hostname)
 
-if [ -f $LOCK_FILE ] || [[ ! $Hname == "kainat" ]]; then
+if [ -f $LOCK_FILE ] || [[ "$Hname" == "kainat" ]]; then
+    echo not gonna run
     exit 0
 else
     welcome-slide.x86_64

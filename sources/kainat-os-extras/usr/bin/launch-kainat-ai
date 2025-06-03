@@ -1,6 +1,6 @@
 #!/bin/bash
-
-if [ -f ~/.config/kainat-ai/stop.lock ]; then
+hname=$(hostname)
+if [ -f ~/.config/kainat-ai/stop.lock ] || [[ "$hostname" == "kainat" ]]; then
     exit 0
 else
     /opt/chat-sotero/start.sh
