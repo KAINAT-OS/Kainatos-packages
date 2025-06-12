@@ -1,10 +1,10 @@
 [Desktop Entry]
-Name=Binary
-Comment=Default Binary theme
+Name=K-light
+Comment=Default Kainat light  theme
 
 X-KDE-PluginInfo-Author=KDE Visual Design Group
 X-KDE-PluginInfo-Email=kainatquaderee@gmail.com
-X-KDE-PluginInfo-Name=Binary
+X-KDE-PluginInfo-Name=kainat
 X-KDE-PluginInfo-Version=20.04.3
 X-KDE-PluginInfo-Website=http://plasma.kde.org
 X-KDE-PluginInfo-Category=
@@ -26,4 +26,4 @@ defaultWidth=1920
 defaultHeight=1080
 
 [AdaptiveTransparency]
-enabled=true
+enabled=false

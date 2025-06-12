@@ -24,11 +24,11 @@ BackgroundNormal=209,211,241
 DecorationFocus=91,100,179
 DecorationHover=91,100,179
 ForegroundActive=61,174,233
-ForegroundInactive=112,125,138
+ForegroundInactive=18,18,84
 ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=35,38,41
+ForegroundNormal=53,53,84
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
@@ -47,8 +47,8 @@ ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [Colors:Header]
-BackgroundAlternate=30,31,49
-BackgroundNormal=30,31,49
+BackgroundAlternate=27,28,44
+BackgroundNormal=27,28,44
 DecorationFocus=61,174,233
 DecorationHover=61,174,233
 ForegroundActive=61,174,233
@@ -56,7 +56,7 @@ ForegroundInactive=112,125,138
 ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=144,150,234
+ForegroundNormal=175,179,234
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
@@ -76,15 +76,15 @@ ForegroundVisited=155,89,182
 
 [Colors:Selection]
 BackgroundAlternate=163,212,250
-BackgroundNormal=123,128,200
+BackgroundNormal=143,149,233
 DecorationFocus=91,100,179
 DecorationHover=91,100,179
 ForegroundActive=255,255,255
-ForegroundInactive=112,125,138
+ForegroundInactive=18,18,84
 ForegroundLink=253,188,75
 ForegroundNegative=176,55,69
 ForegroundNeutral=198,92,0
-ForegroundNormal=30,31,49
+ForegroundNormal=18,18,84
 ForegroundPositive=23,104,57
 ForegroundVisited=155,89,182
 
@@ -94,7 +94,7 @@ BackgroundNormal=247,247,247
 DecorationFocus=91,100,179
 DecorationHover=91,100,179
 ForegroundActive=61,174,233
-ForegroundInactive=112,125,138
+ForegroundInactive=18,18,84
 ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
@@ -108,11 +108,11 @@ BackgroundNormal=230,230,241
 DecorationFocus=91,100,179
 DecorationHover=91,100,179
 ForegroundActive=61,174,233
-ForegroundInactive=112,125,138
+ForegroundInactive=18,18,84
 ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=12,12,19
+ForegroundNormal=18,18,84
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
@@ -122,17 +122,17 @@ BackgroundNormal=220,222,241
 DecorationFocus=91,100,179
 DecorationHover=91,100,179
 ForegroundActive=61,174,233
-ForegroundInactive=112,125,138
+ForegroundInactive=18,18,84
 ForegroundLink=41,128,185
 ForegroundNegative=218,68,83
 ForegroundNeutral=246,116,0
-ForegroundNormal=95,95,150
+ForegroundNormal=18,18,84
 ForegroundPositive=39,174,96
 ForegroundVisited=155,89,182
 
 [General]
 ColorScheme=BreezeLight
-Name=KLight2
+Name=KLight
 shadeSortColumn=true
 
 [KDE]
