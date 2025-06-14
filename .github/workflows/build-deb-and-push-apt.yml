@@ -1,9 +1,6 @@
 name: Build Debian Repository push apt
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 permissions:
   contents: write
