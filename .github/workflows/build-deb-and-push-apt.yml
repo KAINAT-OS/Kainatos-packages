@@ -1,6 +1,9 @@
 name: Build Debian Repository push apt
 
 on:
+  push:
+    branches:
+      - arm64
   workflow_dispatch:
 permissions:
   contents: write
@@ -11,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: arm64
 
       - name: protonup qt works
         run: |
@@ -27,22 +32,14 @@ jobs:
 
       - name: Build .deb packages
         run: |
-          mkdir -p ./main
+          mkdir -p ./main_arm
           for dir in ./sources/*; do
-            dpkg-deb --root-owner-group --build "$dir" "./main/$(basename "$dir").deb"
-          done
-
-          mkdir -p ./nonfree
-          for dir in ./nonfree-src/*; do
-            dpkg-deb --root-owner-group --build "$dir" "./nonfree/$(basename "$dir").deb"
+            dpkg-deb --root-owner-group --build "$dir" "./main_arm/$(basename "$dir").deb"
           done
 
       - name: Generate APT index
         run: |
-          cd main
-          dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
-          cd ../nonfree
-          dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
+          dpkg-scanpackages . /dev/null | gzip -9c > main_arm/Packages.gz
 
       - name: remove sources
         run: |
@@ -60,9 +57,7 @@ jobs:
           lftp -u "$SF_USER","$SF_PASS" sftp://frs.sourceforge.net <<EOF
           set sftp:auto-confirm yes
           set ssl:verify-certificate no
-          cd /home/frs/project/kainatos/main/
-          mirror -R ./main .
-          cd /home/frs/project/kainatos/nonfree/
-          mirror -R ./nonfree .
+          cd /home/frs/project/kainatos/main_arm/
+          mirror -R ./main_arm .
           bye
           EOF
