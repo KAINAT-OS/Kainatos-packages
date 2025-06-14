@@ -4,7 +4,7 @@ Maintainer: Kainat Quaderee <kainatquaderee@gmail.com>
 Version: 25.01.04
 Homepage: http://binaryos.github.io
 Package: kainat-os-core
-Architecture: amd64
+Architecture: all
 Depends: kainat-kde-settings, kainat-desktop, kainat-base-files, kainat-splash, kainat-os-extras
 Conflicts: plymouth
 Description:An metapackage for kainat os that installes all requared files
