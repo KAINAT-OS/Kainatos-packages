@@ -1,28 +1,27 @@
 [Compositing]
-# Enable lightweight OpenGL compositing
-Enabled=true
-Backend=OpenGL
-OpenGLIsUnsafe=false
-# Cap FPS to match typical gaming monitors
-MaxFPS=144
-# Disable desktop animations
-AnimationSpeed=0.0
-# Allow tearing (benefits high-FPS gaming with vsync off)
-AllowTearing=true
-# Let fullscreen apps suspend compositing automatically
-UnredirectFullScreen=true
-# Use nearest-neighbor scaling for minimal overhead
-ScaleMethod=Nearest
-
+Enabled=false
+[Effect-Blur]
+Enabled=false
+[Effect-Login]
+Enabled=false
 [Plugins]
-# Disable all non-essential effects for performance
 blurEnabled=false
-cubeEnabled=false
-desktopGridEnabled=false
-dimInactiveEnabled=false
-presentWindowsEnabled=false
-ringSwitchEnabled=false
-scaleEnabled=false
-thumbWindowsEnabled=false
-windowAppSwitcherEnabled=false
+contrastEnabled=false
+desktopgridEnabled=false
+kwin4_effect_dialogparentEnabled=false
+kwin4_effect_fadingpopupsEnabled=false
+kwin4_effect_frozenappEnabled=false
+kwin4_effect_fullscreenEnabled=false
+kwin4_effect_loginEnabled=false
+kwin4_effect_logoutEnabled=false
+kwin4_effect_maximizeEnabled=false
+kwin4_effect_morphingpopupsEnabled=false
+kwin4_effect_scaleEnabled=false
+kwin4_effect_squashEnabled=false
+overviewEnabled=false
+screenedgeEnabled=false
+slideEnabled=false
+slidingpopupsEnabled=false
+tileseditorEnabled=false
+windowviewEnabled=false
 zoomEnabled=false
