@@ -1,2 +1,1 @@
 deb [trusted=yes] https://sourceforge.net/projects/kainatos/files/ main_arm/
-deb [trusted=yes] https://sourceforge.net/projects/kainatos/files/nonfree/ main_arm/
