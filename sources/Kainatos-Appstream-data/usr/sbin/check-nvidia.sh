@@ -5,7 +5,7 @@
 
 set -e
 
-LICENSE_URL="https://www.nvidia.com/en-us/drivers/nvidia-license/linux"
+LICENSE_URL="https://download.nvidia.com/XFree86/Linux-x86_64/575.64.05/license.txt"
 LICENSE_FILE="/tmp/NVIDIA_DRIVER_LICENSE.txt"
 TMPDIR=$(mktemp -d)
 LOGFILE="$HOME/nvidia-installer.log"
