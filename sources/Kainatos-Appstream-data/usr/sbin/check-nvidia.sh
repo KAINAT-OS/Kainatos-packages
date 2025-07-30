@@ -8,7 +8,7 @@ set -e
 LICENSE_URL="https://www.nvidia.com/en-us/drivers/nvidia-license/linux"
 LICENSE_FILE="/tmp/NVIDIA_DRIVER_LICENSE.txt"
 TMPDIR=$(mktemp -d)
-LOGFILE="/tmp/nvidia-installer.log"
+LOGFILE="$HOME/nvidia-installer.log"
 
 # === Zenity Helper Functions ===
 prompt_error() {
@@ -17,8 +17,9 @@ prompt_error() {
 }
 
 prompt_success() {
-    if ! zenity --info --title="✅ Done" --text="NVIDIA Driver installed successfully! you need to reboot your system now." --checkbox="reboot now"; then
+    if ! zenity --question --title="✅ Done" --text="NVIDIA Driver installed successfully! you need to reboot your system now." --checkbox="reboot now"; then
         echo "$PASSWORD" | sudo -S reboot
+    fi
     exit 0
 }
 
@@ -69,23 +70,23 @@ rm /tmp/nvidia-password.txt
 # === Installation Process ===
 (
 echo "# Installing kernel headers..."
-echo "$PASSWORD" | sudo -S apt install -y linux-headers-$(uname -r) >> "$LOGFILE" 2>&1 || exit 1
+echo "$PASSWORD" | sudo -S apt install -y linux-headers-$(uname -r) >> "$LOGFILE" 2>&1 || prompt_error "failed to install kernel headers"
 
 echo "# Installing CUDA keyring..."
 cd "$TMPDIR"
 
-wget -q "https://developer.download.nvidia.com/compute/cuda/repos/$(base)/$(arch)/cuda-keyring_1.1-1_all.deb" || exit 1
-echo "$PASSWORD" | sudo -S dpkg -i cuda-keyring_1.1-1_all.deb >> "$LOGFILE" 2>&1 || exit 1
+wget -q "https://developer.download.nvidia.com/compute/cuda/repos/$(base)/$(arch)/cuda-keyring_1.1-1_all.deb" || prompt_error "failed"
+echo "$PASSWORD" | sudo -S dpkg -i cuda-keyring_1.1-1_all.deb >> "$LOGFILE" 2>&1 || prompt_error "failed"
 
 echo "# Updating package list..."
-echo "$PASSWORD" | sudo -S apt update >> "$LOGFILE" 2>&1 || exit 1
+echo "$PASSWORD" | sudo -S apt update
 
 if [ "$DRIVER_TYPE" = "open" ]; then
     echo "# Installing Open Source NVIDIA driver..."
-    echo "$PASSWORD" | sudo -S apt install -y nvidia-open >> "$LOGFILE" 2>&1 || exit 1
+    echo "$PASSWORD" | sudo -S apt install -y nvidia-open >> "$LOGFILE" 2>&1 || prompt_error "failed"
 else
     echo "# Installing Proprietary NVIDIA driver..."
-    echo "$PASSWORD" | sudo -S apt install -y cuda-drivers >> "$LOGFILE" 2>&1 || exit 1
+    echo "$PASSWORD" | sudo -S apt install -y cuda-drivers >> "$LOGFILE" 2>&1 || prompt_error "failed to install"
 fi
 ) | zenity --progress --title="Installing NVIDIA Driver..." \
            --pulsate --auto-close --width=400 --height=100 \
