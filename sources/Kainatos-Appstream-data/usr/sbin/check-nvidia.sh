@@ -73,9 +73,8 @@ echo "$PASSWORD" | sudo -S apt install -y linux-headers-$(uname -r) >> "$LOGFILE
 
 echo "# Installing CUDA keyring..."
 cd "$TMPDIR"
-ARCH=$(dpkg --print-architecture)
-BASE="debian12"
-wget -q "https://developer.download.nvidia.com/compute/cuda/repos/${BASE}/${ARCH}/cuda-keyring_1.1-1_all.deb" || exit 1
+
+wget -q "https://developer.download.nvidia.com/compute/cuda/repos/$(base)/$(arch)/cuda-keyring_1.1-1_all.deb" || exit 1
 echo "$PASSWORD" | sudo -S dpkg -i cuda-keyring_1.1-1_all.deb >> "$LOGFILE" 2>&1 || exit 1
 
 echo "# Updating package list..."
