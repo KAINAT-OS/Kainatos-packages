@@ -17,7 +17,7 @@ prompt_error() {
 }
 
 prompt_success() {
-    if ! zenity --info --title="✅ Done" --text="NVIDIA Driver installed successfully!" --checkbox="reboot now"; then
+    if ! zenity --info --title="✅ Done" --text="NVIDIA Driver installed successfully! you need to reboot your system now." --checkbox="reboot now"; then
         echo "$PASSWORD" | sudo -S reboot
     exit 0
 }
