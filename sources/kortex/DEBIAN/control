@@ -1,0 +1,8 @@
+Package: kortex-launcher
+Version: 25.1
+Section: games
+Priority: optional
+Architecture: amd64
+Maintainer: Kainat Quaderee
+Depends: bash, python3, jq, lutris, systemd, x11-xserver-utils, libx11-6, libglib2.0-0, xdotool, sudo
+Description: Kortex Game Launcher - A fullscreen Godot-based game shell integrated with Lutris for Kainat OS and debian based OS.

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Set output file and folder
+output_folder="$HOME/.config/kortex"
+mkdir -p "$output_folder"
+output_file="$output_folder/recent_games.txt"
+
+# Get, sort, and extract info with tab-separated fields
+lutris -l -j | jq -r '
+    sort_by(.lastplayed) | reverse |
+    .[:10][] |
+    "\(.slug)\t\(.id)\t\(.name)\t\(.playtime)"
+' > "$output_file"
+
+echo "Saved top 10 recent games to $output_file"

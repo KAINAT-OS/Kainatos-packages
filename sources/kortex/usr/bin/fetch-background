@@ -1,0 +1,44 @@
+#!/bin/bash
+
+SLUG="$1"
+if [ -z "$SLUG" ]; then
+    echo "Usage: $0 <slug>"
+    exit 1
+fi
+
+SCREENSHOT_DIR="$HOME/.config/kortex/screenshots"
+BG_DIR="$HOME/.config/kortex/backgrounds"
+mkdir -p "$SCREENSHOT_DIR" "$BG_DIR"
+
+# Skip if already exists
+if [ -f "$BG_DIR/$SLUG.jpg" ] || [ -f "$BG_DIR/$SLUG.png" ]; then
+    echo "Background already exists for: $SLUG"
+    exit 0
+fi
+
+# Download the HTML page
+HTML=$(curl -s "https://lutris.net/games/$SLUG/")
+
+# Extract all screenshot URLs
+echo "$HTML" | grep -oP '<a href="\/\/lutris.net\/media\/games\/screenshots\/[^"]+' \
+| sed 's/^<a href="\/\//https:\/\//' \
+| while read -r URL; do
+    FILENAME=$(basename "$URL")
+    DEST="$SCREENSHOT_DIR/${SLUG}_$FILENAME"
+    if [ ! -f "$DEST" ]; then
+        echo "Downloading $URL -> $DEST"
+        curl -s -L "$URL" -o "$DEST"
+    fi
+done
+
+# Pick one random screenshot
+RANDOM_FILE=$(find "$SCREENSHOT_DIR" -type f -name "${SLUG}_*" | shuf -n 1)
+
+if [ -n "$RANDOM_FILE" ]; then
+    EXT="${RANDOM_FILE##*.}"
+    cp "$RANDOM_FILE" "$BG_DIR/$SLUG.$EXT"
+    echo "Saved random screenshot as background: $BG_DIR/$SLUG.$EXT"
+else
+    echo "No screenshots found for $SLUG"
+    exit 1
+fi

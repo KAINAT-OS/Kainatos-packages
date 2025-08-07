@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+SUDOERS_FILE="/etc/sudoers.d/kortex-mode"
+
+# Write sudoers rule
+echo "ALL ALL=(ALL) NOPASSWD: /bin/kortex-mode" > "$SUDOERS_FILE"
+chmod 440 "$SUDOERS_FILE"
+
+# Validate sudoers syntax
+if ! visudo -cf "$SUDOERS_FILE"; then
+    echo "ERROR: sudoers syntax invalid in $SUDOERS_FILE, removing bad file and aborting installation."
+    rm -f "$SUDOERS_FILE"
+    exit 1
+fi
+
+exit 0

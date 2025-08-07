@@ -1,0 +1,2 @@
+#!/bin/bash
+exec /usr/bin/kortex-game-manager.x86_64

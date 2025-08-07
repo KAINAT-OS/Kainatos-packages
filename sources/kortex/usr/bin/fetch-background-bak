@@ -1,0 +1,60 @@
+#!/bin/bash
+
+SLUG="$1"
+if [ -z "$SLUG" ]; then
+    echo "Usage: $0 <slug>"
+    exit 1
+fi
+
+TARGET_DIR="$HOME/.config/kortex/backgrounds"
+WALL_PATH="$TARGET_DIR/$SLUG.jpg"
+
+# Skip if wallpaper already exists
+if [ -f "$WALL_PATH" ]; then
+    echo "Wallpaper already exists: $WALL_PATH"
+    exit 0
+fi
+
+mkdir -p "$TARGET_DIR"
+
+# Try direct slug lookup
+RESPONSE=$(curl -s "https://lutris.net/api/games?slug=$SLUG")
+
+# Parse game name from direct slug response
+GAME_NAME=$(echo "$RESPONSE" | jq -r '
+    if type=="array" then
+        if length > 0 then .[0].name else empty end
+    elif type=="object" then
+        .name // empty
+    else
+        empty
+    end
+')
+
+# Fallback to search API
+if [ -z "$GAME_NAME" ]; then
+    echo "Slug lookup failed, falling back to search..."
+    RESPONSE=$(curl -s "https://lutris.net/api/games?search=$SLUG")
+    GAME_NAME=$(echo "$RESPONSE" | jq -r '.results[0].name // empty')
+fi
+
+if [ -z "$GAME_NAME" ]; then
+    echo "Game not found for slug: $SLUG"
+    exit 1
+fi
+
+echo "Found game: $GAME_NAME"
+
+# Query Wallhaven for related wallpaper
+WALL_URL=$(curl -s "https://wallhaven.cc/api/v1/search?q=${GAME_NAME// /+}&purity=100&categories=100&atleast=1920x1080&sorting=random" \
+  | jq -r '.data[0].path // empty')
+
+if [ -z "$WALL_URL" ]; then
+    echo "No wallpaper found for: $GAME_NAME"
+    exit 1
+fi
+
+echo "Downloading wallpaper: $WALL_URL"
+curl -L "$WALL_URL" -o "$WALL_PATH"
+
+echo "Saved to $WALL_PATH"

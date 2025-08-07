@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Check if PID is passed
+if [ -z "$1" ]; then
+    echo "Usage: $0 <PID>"
+    exit 1
+fi
+
+TARGET_PID=$1
+
+# Function to recursively kill child processes
+killtree() {
+    local parent_pid=$1
+    # Find all child processes
+    local children=$(pgrep -P $parent_pid)
+
+    for child in $children; do
+        killtree $child
+    done
+
+    # Kill the parent process
+    echo "Killing PID $parent_pid"
+    kill -9 $parent_pid 2>/dev/null
+}
+
+killtree $TARGET_PID

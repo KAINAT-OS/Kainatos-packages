@@ -1,0 +1,99 @@
+#!/bin/bash
+set -euo pipefail
+
+USERNAME="$(whoami)"
+KORTEX_BIN_PATH="/bin/kortex"
+KORTEX_SCRIPT="/usr/local/bin/kortex-startx.sh"
+SERVICE_FILE="/etc/systemd/system/kortex-session.service"
+GETTY_OVERRIDE="/etc/systemd/system/getty@tty1.service.d/override.conf"
+
+function enable_kortex_mode() {
+	# ✅ Only install minimal X11 if missing
+	if ! command -v startx &>/dev/null || ! command -v Xorg &>/dev/null; then
+		echo "[*] Installing minimal X11..."
+		sudo apt install -y --no-install-recommends xserver-xorg xinit x11-xserver-utils
+	else
+		echo "[✓] X11 already installed. Skipping."
+	fi
+
+	echo "[*] Creating Kortex start script..."
+	sudo tee "$KORTEX_SCRIPT" > /dev/null <<EOF
+#!/bin/bash
+xset -dpms
+xset s off
+xset s noblank
+exec "$KORTEX_BIN_PATH"
+EOF
+	sudo chmod +x "$KORTEX_SCRIPT"
+
+	echo "[*] Creating systemd service for Kortex..."
+	sudo tee "$SERVICE_FILE" > /dev/null <<EOF
+[Unit]
+Description=Kortex Session
+After=systemd-user-sessions.service network.target sound.target
+
+[Service]
+ExecStart=$KORTEX_SCRIPT
+Restart=always
+User=$USERNAME
+Environment=DISPLAY=:0
+Environment=XDG_SESSION_TYPE=tty
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=graphical.target
+EOF
+
+	echo "[*] Enabling auto-login on tty1..."
+	sudo mkdir -p "$(dirname "$GETTY_OVERRIDE")"
+	sudo tee "$GETTY_OVERRIDE" > /dev/null <<EOF
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin $USERNAME --noclear %I \$TERM
+EOF
+
+	echo "[*] Disabling desktop login manager (e.g., SDDM)..."
+	sudo systemctl disable sddm || true
+
+	echo "[*] Enabling Kortex systemd session..."
+	sudo systemctl enable kortex-session
+	sudo systemctl set-default graphical.target
+
+	echo "[✅] Kortex mode enabled. Reboot to launch directly into Kortex!"
+}
+
+function enable_desktop_mode() {
+	echo "[*] Removing Kortex session and launcher script..."
+	sudo systemctl disable kortex-session || true
+	sudo rm -f "$SERVICE_FILE" "$KORTEX_SCRIPT"
+
+	echo "[*] Removing auto-login on tty1..."
+	sudo rm -f "$GETTY_OVERRIDE"
+
+	echo "[*] Enabling desktop login manager (e.g., SDDM)..."
+	sudo systemctl enable sddm
+	sudo systemctl set-default graphical.target
+
+	echo "[✅] Desktop mode restored. Reboot to return to your normal desktop."
+}
+
+### Entry Point
+if [[ $# -ne 1 ]]; then
+	echo "Usage: $0 [kortex|desktop]"
+	exit 1
+fi
+
+case "$1" in
+	kortex)
+		enable_kortex_mode
+		;;
+	desktop)
+		enable_desktop_mode
+		;;
+	*)
+		echo "Invalid argument: $1"
+		echo "Usage: $0 [kortex|desktop]"
+		exit 1
+		;;
+esac

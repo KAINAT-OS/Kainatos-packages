@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Kortex Game Launcher
+Comment=Fullscreen Godot-based game launcher integrated with Lutris for Kainat OS
+Exec=/usr/bin/kortex
+Icon=kortex
+Terminal=false
+Type=Application
+Categories=Game;
+StartupNotify=true
