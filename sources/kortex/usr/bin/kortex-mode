@@ -23,7 +23,7 @@ HOME_DIR="/home/$USERNAME"
 
 # File paths
 SSDM_DROPIN="/etc/sddm.conf.d/Kortex-mode.conf"
-START_SCRIPT="$HOME_DIR/.config/autostart/kortex.desktop"
+START_SCRIPT="$HOME_DIR/.config/plasma-workspace/env/kortex_start"
 
 function enable_kortex() {
   echo "[*] Enabling Kortex mode for user: $USERNAME"
@@ -35,19 +35,10 @@ User=kainatq
 EOF
 
   cat <<EOF >$START_SCRIPT
-[Desktop Entry]
-Type=Application
-Exec=/bin/kortex
-Hidden=false
-NoDisplay=false
-X-GNOME-Autostart-enabled=true
-Name=Kortex
-Comment=Start Kortex before Plasma
-Terminal=false
-X-KDE-autostart-phase=-1
-
+#!/bin/bash
+/bin/kortex
 EOF
-
+chmod +x $START_SCRIPT
   echo "✅ Kortex mode enabled. Reboot to auto-login into your minimal Xorg session."
 }
 
