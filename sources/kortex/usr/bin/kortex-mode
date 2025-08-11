@@ -38,7 +38,8 @@ EOF
 #!/bin/bash
 /bin/kortex
 EOF
-chmod +x $START_SCRIPT
+chmod +x "$START_SCRIPT"
+chown "$USERNAME:$USERNAME" "$START_SCRIPT"
   echo "✅ Kortex mode enabled. Reboot to auto-login into your minimal Xorg session."
 }
 
