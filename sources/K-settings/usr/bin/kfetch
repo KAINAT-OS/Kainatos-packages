@@ -1,0 +1,45 @@
+#!/bin/bash
+# kfetch - simple system info fetcher for KainatOS
+# by Kainat Quaderee
+# GPL 3 license
+echo "=== KainatOS System Info ==="
+echo
+
+# Hostname
+echo "Hostname: $(hostname)"
+
+# OS
+if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    echo "OS: $NAME $VERSION"
+fi
+
+# Kernel
+echo "Kernel: $(uname -r)"
+
+# Uptime
+echo "Uptime: $(uptime -p)"
+
+# CPU
+echo "CPU: $(lscpu | grep 'Model name' | awk -F: '{print $2}' | sed 's/^ //')"
+
+# Memory
+echo "Memory: $(free -h | awk '/Mem:/ {print $3 " / " $2}')"
+
+# Disk
+echo "Disk: $(df -h / | awk 'NR==2 {print $3 " / " $2}')"
+
+# Shell
+echo "Shell: $SHELL"
+
+# Terminal
+echo "Terminal: $TERM"
+
+# Optional: GPU
+if command -v lspci >/dev/null 2>&1; then
+    GPU=$(lspci | grep -E "VGA|3D" | awk -F: '{print $3}' | sed 's/^[ \t]*//')
+    echo "GPU: $GPU"
+fi
+
+echo
+echo "============================"
