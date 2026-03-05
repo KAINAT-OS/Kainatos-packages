@@ -3,7 +3,7 @@ name: Build Debian Repository push apt
 on:
   push:
     branches:
-      - main
+      - orbit
   workflow_dispatch:
 permissions:
   contents: write
@@ -63,9 +63,9 @@ jobs:
           lftp -u "$SF_USER","$SF_PASS" sftp://frs.sourceforge.net <<EOF
           set sftp:auto-confirm yes
           set ssl:verify-certificate no
-          cd /home/frs/project/kainatos/main/
+          cd /home/frs/project/kainatos/orbit/main/
           mirror -R ./main .
-          cd /home/frs/project/kainatos/nonfree/
+          cd /home/frs/project/kainatos/orbit/nonfree/
           mirror -R ./nonfree .
           bye
           EOF
