@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Name": "Kainat-OS-6",
+        "Id": "Kainat-OS-6",
+        "Authors": [
+            {
+                "Name": "kainat Quaderee",
+                "Email": "kainatquaderee@gmail.com"
+            }
+        ],
+        "License": "GPLv3"
+    }
+}

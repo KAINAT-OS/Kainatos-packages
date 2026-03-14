@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Name": "Kainat-Galaxy-nodes-Light",
+        "Id": "Kainat-Galaxy-nodes-Light",
+        "Authors": [
+            {
+                "Name": "kainat Quaderee",
+                "Email": "kainatquaderee@gmail.com"
+            }
+        ],
+        "License": "GPLv3"
+    }
+}

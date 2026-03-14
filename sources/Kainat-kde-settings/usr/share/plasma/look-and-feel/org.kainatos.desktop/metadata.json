@@ -1,0 +1,19 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "kainatquaderee@gmail.com",
+                "Name": "Kainat Quaderee"
+            }
+        ],
+        "Category": "",
+        "Description": "KainatOS by Kainat Quaderee",
+        "Id": "org.kainatos.desktop",
+        "License": "GPLv2+",
+        "Name": "KainatOS",
+        "Website": "https://kainat-os.github.io/"
+    },
+    "Keywords": "Desktop;Workspace;Appearance;Look and Feel;Logout;Lock;Suspend;Shutdown;Hibernate;",
+    "X-Plasma-APIVersion": "2"
+}
